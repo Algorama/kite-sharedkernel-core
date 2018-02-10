@@ -18,13 +18,11 @@ namespace SharedKernel.EntityFramework
         public void Insert(T entity)
         {
             Context.Add(entity);
-            Context.SaveChanges();
         }
         
         public void Update(T entity)
         {
             Context.Update(entity);
-            Context.SaveChanges();
         }
 
         public void Save(T entity)
@@ -38,7 +36,6 @@ namespace SharedKernel.EntityFramework
         public void Delete(T entity)
         {
             Context.Remove(entity);
-            Context.SaveChanges();
         }
 
         public void RunCommand(string hqlCommand)
