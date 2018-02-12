@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Repositories;
 
-namespace SharedKernel.EntityFramework
+namespace SharedKernel.EntityFramework.Repositories
 {
     public class SessionRepository : ISessionRepository
     {

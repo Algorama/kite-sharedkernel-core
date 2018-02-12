@@ -7,7 +7,7 @@ using SharedKernel.Domain.Dtos;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Repositories;
 
-namespace SharedKernel.EntityFramework
+namespace SharedKernel.EntityFramework.Repositories
 {
     public class QueryRepository<T> : IQueryRepository<T> where T : EntityBase
     {
