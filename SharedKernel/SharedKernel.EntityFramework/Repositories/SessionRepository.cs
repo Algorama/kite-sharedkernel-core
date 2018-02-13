@@ -11,9 +11,9 @@ namespace SharedKernel.EntityFramework.Repositories
         // https://docs.microsoft.com/pt-br/ef/core/saving/transactions
         // Caso seja necessário declarar explicitamente as transações, essa classe poderá ser modificada para tal
 
-        private readonly DatabaseContext _context;
+        private readonly AppContext _context;
 
-        public SessionRepository(DatabaseContext context)
+        public SessionRepository(AppContext context)
         {
             _context = context;
         }

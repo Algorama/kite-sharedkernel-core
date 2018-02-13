@@ -3,21 +3,16 @@ using SharedKernel.Domain.Repositories;
 
 namespace SharedKernel.EntityFramework.Repositories
 {
-    public class DatabaseContext : DbContext, IHelperRepository
+    public class AppContext : DbContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+        public AppContext(DbContextOptions<AppContext> options)
             : base(options)
         {
         }
-       
+      
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-        }
-
-        ISessionRepository IHelperRepository.OpenSession()
-        {
-            return new SessionRepository(this);
         }
     }
 }

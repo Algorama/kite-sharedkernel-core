@@ -11,7 +11,7 @@ namespace SharedKernel.EntityFramework.Repositories
 {
     public class Repository<T> : QueryRepository<T>, IRepository<T> where T : EntityBase, IAggregateRoot
     {
-        public Repository(DatabaseContext context) : base(context)
+        public Repository(AppContext context) : base(context)
         {
         }
 
