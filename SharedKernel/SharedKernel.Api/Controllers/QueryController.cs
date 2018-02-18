@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Services;
 using SharedKernel.Domain.ValueObjects;
+using SharedKernel.Api.Filters;
 
 namespace SharedKernel.Api.Controllers
 {
+    [UserAuthorization]
     public class QueryController<T> : Controller where T : EntityBase
     {
         protected IQueryService<T> Service { get; set; }
@@ -58,6 +60,7 @@ namespace SharedKernel.Api.Controllers
             }
         }        
 
+        // TODO: Paginação (UrlHelper)
         // /// <summary>
         // /// Retorna uma lista paginada de entidades
         // /// </summary>
@@ -94,6 +97,7 @@ namespace SharedKernel.Api.Controllers
         //     }
         // }
 
+        // TODO: ODATA EF
         // /// <summary>
         // /// Retorna uma Lista ODATA de Entidades
         // /// </summary>

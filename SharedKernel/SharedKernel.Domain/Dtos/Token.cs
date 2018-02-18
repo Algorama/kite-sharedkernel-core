@@ -8,5 +8,6 @@ namespace SharedKernel.Domain.Dtos
         public string   UsuarioNome     { get; set; }
         public string   Login           { get; set; }
         public DateTime DataExpiracao   { get; set; }
+        public bool     DeveTrocarSenha { get; set; }
     }
 }
