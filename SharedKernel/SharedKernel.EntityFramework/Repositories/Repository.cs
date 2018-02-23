@@ -1,9 +1,5 @@
 using System;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore; 
-using SharedKernel.Domain.Dtos;
+using Microsoft.EntityFrameworkCore;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Repositories;
 
@@ -11,7 +7,7 @@ namespace SharedKernel.EntityFramework.Repositories
 {
     public class Repository<T> : QueryRepository<T>, IRepository<T> where T : EntityBase, IAggregateRoot
     {
-        public Repository(AppContext context) : base(context)
+        public Repository(DbContext context) : base(context)
         {
         }
 

@@ -11,10 +11,10 @@ namespace SharedKernel.EntityFramework.Repositories
 {
     public class QueryRepository<T> : IQueryRepository<T> where T : EntityBase
     {
-        protected AppContext Context { get; set; }
+        protected DbContext Context { get; set; }
         protected DbSet<T> Entities {get; set; }
 
-        public QueryRepository(AppContext context)
+        public QueryRepository(DbContext context)
         {
             Context  = context;
             Entities = Context.Set<T>(); 

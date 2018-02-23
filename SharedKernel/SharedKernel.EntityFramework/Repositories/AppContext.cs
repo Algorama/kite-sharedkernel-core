@@ -13,6 +13,9 @@ namespace SharedKernel.EntityFramework.Repositories
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            //modelBuilder.ApplyConfiguration(new UsuarioMap());
+            //modelBuilder.ApplyConfiguration(new AplicacaoMap());
         }
     }
 }
