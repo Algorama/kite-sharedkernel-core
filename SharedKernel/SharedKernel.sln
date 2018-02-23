@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel.EntityFramewor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel.Api", "SharedKernel.Api\SharedKernel.Api.csproj", "{EE18A3BB-2450-4058-AF07-B9D0319752D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel.DependencyInjector", "SharedKernel.DependencyInjector\SharedKernel.DependencyInjector.csproj", "{A96D7D11-9272-447C-8E51-B95632BAB0AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,18 @@ Global
 		{EE18A3BB-2450-4058-AF07-B9D0319752D4}.Release|x64.Build.0 = Release|x64
 		{EE18A3BB-2450-4058-AF07-B9D0319752D4}.Release|x86.ActiveCfg = Release|x86
 		{EE18A3BB-2450-4058-AF07-B9D0319752D4}.Release|x86.Build.0 = Release|x86
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Debug|x64.ActiveCfg = Debug|x64
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Debug|x64.Build.0 = Debug|x64
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Debug|x86.ActiveCfg = Debug|x86
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Debug|x86.Build.0 = Debug|x86
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Release|x64.ActiveCfg = Release|x64
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Release|x64.Build.0 = Release|x64
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Release|x86.ActiveCfg = Release|x86
+		{A96D7D11-9272-447C-8E51-B95632BAB0AD}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

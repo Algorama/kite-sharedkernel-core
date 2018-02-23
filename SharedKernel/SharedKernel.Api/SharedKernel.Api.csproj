@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SharedKernel.Domain\SharedKernel.Domain.csproj" />
     <ProjectReference Include="..\SharedKernel.EntityFramework\SharedKernel.EntityFramework.csproj" />
+    <ProjectReference Include="..\SharedKernel.DependencyInjector\SharedKernel.DependencyInjector.csproj" />
   </ItemGroup>
 
   <ItemGroup>
