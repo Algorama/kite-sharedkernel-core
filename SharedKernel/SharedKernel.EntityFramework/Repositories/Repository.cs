@@ -32,6 +32,7 @@ namespace SharedKernel.EntityFramework.Repositories
         public void Delete(T entity)
         {
             Context.Remove(entity);
+            Context.Entry(entity).State = EntityState.Deleted;
         }
 
         public void RunCommand(string hqlCommand)
