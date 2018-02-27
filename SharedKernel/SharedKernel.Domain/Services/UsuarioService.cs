@@ -94,7 +94,7 @@ namespace SharedKernel.Domain.Services
                     UsuarioId = usuario.Id,
                     UsuarioNome = usuario.Nome,
                     Login = usuario.Login,
-                    DataExpiracao = DateTime.Now
+                    DataExpiracao = DateTime.Now.AddHours(12)
                 };
                 return token;
             }
