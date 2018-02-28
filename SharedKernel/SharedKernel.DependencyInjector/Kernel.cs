@@ -2,6 +2,7 @@ using System;
 using SharedKernel.Domain.Repositories;
 using SharedKernel.Domain.Services;
 using SharedKernel.EntityFramework.Repositories;
+using SharedKernel.EntityFramework.Mock;
 using SimpleInjector;
 
 namespace SharedKernel.DependencyInjector
@@ -12,15 +13,16 @@ namespace SharedKernel.DependencyInjector
 
         public static Container GetKernel()
         {
-            if(_kernel == null)
+            if (_kernel == null)
                 throw new Exception("Kernel não foi inicializado");
-            
+
             return _kernel;
         }
 
         private static void StartBase()
         {
             _kernel = new Container();
+            //_kernel.Options.AllowOverridingRegistrations = false;
             _kernel.Register(typeof(IQueryService<>), typeof(QueryService<>));
             _kernel.Register(typeof(ICrudService<>), typeof(CrudService<>));
         }
@@ -30,6 +32,12 @@ namespace SharedKernel.DependencyInjector
             StartBase();
             _kernel.Register<IHelperRepository, HelperRepository>();
         }
+
+        public static void StartMock()
+        {
+            StartBase();
+            _kernel.Register<IHelperRepository, MockHelperRepository>();
+        }        
 
         public static T Get<T>() where T : class
         {

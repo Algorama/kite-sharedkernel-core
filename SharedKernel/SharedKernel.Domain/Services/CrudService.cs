@@ -128,10 +128,8 @@ namespace SharedKernel.Domain.Services
             }
         }
 
-        public virtual void Delete(long id)
+        public virtual void Delete(T entity)
         {
-            var entity = base.Get(id);
-
             var result = Validator.Validate(entity, ValidationTypes.Delete);
             if (!result.IsValid)
                 throw new ValidatorException(result.Errors);

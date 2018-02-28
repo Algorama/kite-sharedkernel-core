@@ -91,11 +91,11 @@ namespace SharedKernel.Api.Controllers
         {
             try
             {
-                var existe = Service.Get(id) != null;
-                if (existe == false)
+                var entity = Service.Get(id);
+                if (entity == null)
                     return NotFound();
 
-                Service.Delete(id);
+                Service.Delete(entity);
 
                 return Ok();
             }
