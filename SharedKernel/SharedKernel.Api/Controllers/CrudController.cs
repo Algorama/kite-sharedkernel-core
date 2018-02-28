@@ -2,10 +2,10 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Services;
-using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Domain.Validation;
 using SharedKernel.Api.Security;
 using SharedKernel.Api.Filters;
+using SharedKernel.DependencyInjector;
 
 namespace SharedKernel.Api.Controllers
 {
@@ -14,9 +14,9 @@ namespace SharedKernel.Api.Controllers
     {
         protected new ICrudService<T> Service { get; set; }
 
-        public CrudController(ICrudService<T> service) : base(service)
+        public CrudController()
         {
-            Service = service;
+            Service = Kernel.Get<ICrudService<T>>();
         }
 
         /// <summary>
@@ -24,6 +24,7 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="entity">Entidade</param>
         /// <returns>Entidade inclusa</returns>
+        [HttpPost]
         public virtual IActionResult Post([FromBody]T entity)
         {
             try
@@ -56,18 +57,13 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="entity">Entidade</param>
         /// <returns>Entidade atualizada</returns>
+        [HttpPut]
         public virtual IActionResult Put([FromBody]T entity)
         {
             try
             {
-                var existe = Service.Get(entity.Id) != null;
-                if (existe == false)
-                    return NotFound();
-
                 var token = HttpContext.RecuperarToken();
                 Service.Update(entity, token?.Login);
-
-                entity = Service.Get(entity.Id);
 
                 return Ok(entity);
             }
@@ -87,6 +83,7 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="id">ID da Entidade</param>
         /// <returns>OK</returns>
+        [HttpDelete]
         public virtual IActionResult Delete(long id)
         {
             try

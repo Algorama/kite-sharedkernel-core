@@ -1,9 +1,17 @@
 using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using SharedKernel.Domain.Repositories;
 using SharedKernel.Domain.Services;
 using SharedKernel.EntityFramework.Repositories;
 using SharedKernel.EntityFramework.Mock;
 using SimpleInjector;
+using SimpleInjector.Integration.AspNetCore.Mvc;
+using SimpleInjector.Lifestyles;
 
 namespace SharedKernel.DependencyInjector
 {
@@ -22,7 +30,6 @@ namespace SharedKernel.DependencyInjector
         private static void StartBase()
         {
             _kernel = new Container();
-            //_kernel.Options.AllowOverridingRegistrations = false;
             _kernel.Register(typeof(IQueryService<>), typeof(QueryService<>));
             _kernel.Register(typeof(ICrudService<>), typeof(CrudService<>));
         }
@@ -37,7 +44,25 @@ namespace SharedKernel.DependencyInjector
         {
             StartBase();
             _kernel.Register<IHelperRepository, MockHelperRepository>();
-        }        
+        }
+
+        public static void IntegrateAspNet(IServiceCollection services)
+        {
+            _kernel = new Container();
+            _kernel.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(_kernel));
+            services.AddSingleton<IViewComponentActivator>(new SimpleInjectorViewComponentActivator(_kernel));
+            services.UseSimpleInjectorAspNetRequestScoping(_kernel);
+        }
+
+        public static void StartAspNet(IConfiguration configuration, IApplicationBuilder app)
+        {
+            _kernel.RegisterMvcControllers(app);
+            _kernel.Register(typeof(IQueryService<>), typeof(QueryService<>));
+            _kernel.Register(typeof(ICrudService<>), typeof(CrudService<>));
+            _kernel.Register<IHelperRepository, HelperRepository>();
+        }
 
         public static T Get<T>() where T : class
         {

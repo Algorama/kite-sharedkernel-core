@@ -4,12 +4,15 @@ using SharedKernel.Domain.Dtos;
 using SharedKernel.Domain.Services;
 using SharedKernel.Domain.Validation;
 using SharedKernel.Api.Security;
+using SharedKernel.DependencyInjector;
 
 namespace SharedKernel.Api.Controllers
 {
+    /// <inheritdoc />
     /// <summary>
     /// Recurso para Autenticar Usuários da Aplicação
-    /// </summary>	
+    /// </summary>
+    [Route("api/[controller]")]
     public class TokenController : Controller
     {
         private readonly IUsuarioService _usuarioService;
@@ -17,9 +20,9 @@ namespace SharedKernel.Api.Controllers
         /// <summary>
         /// Recurso para Autenticar Usuários da Aplicação
         /// </summary>
-        public TokenController(IUsuarioService usuarioService)
+        public TokenController()
 	    {
-	        _usuarioService = usuarioService;
+	        _usuarioService = Kernel.Get<IUsuarioService>();
         }
 
         /// <summary>
@@ -27,6 +30,7 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="login">Login e Senha do Usuário para a Autenticação</param>
         /// <returns>Token de Autenticação à ser utilizado nas requisições privadas</returns>
+        [HttpPost]        
         public IActionResult Post([FromBody]LoginRequest login)
         {
             try
@@ -54,6 +58,7 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="changePasswordRequest">Informações para a troca de senha obrigatória</param>
         /// <returns>Ok</returns>
+        [HttpPost]
         [Route("api/trocasenha/obrigatoria")]
         public ActionResult PostTrocaSenha([FromBody]ChangePasswordRequest changePasswordRequest)
         {

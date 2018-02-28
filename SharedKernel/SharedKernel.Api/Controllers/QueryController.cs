@@ -2,8 +2,8 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Services;
-using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Api.Filters;
+using SharedKernel.DependencyInjector;
 
 namespace SharedKernel.Api.Controllers
 {
@@ -12,9 +12,9 @@ namespace SharedKernel.Api.Controllers
     {
         protected IQueryService<T> Service { get; set; }
 
-        public QueryController(IQueryService<T> service)
+        public QueryController()
         {
-            Service = service;
+            Service = Kernel.Get<IQueryService<T>>();
         }
 
         /// <summary>
@@ -22,6 +22,8 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="id">ID da entidade</param>
         /// <returns>Entidade</returns>
+        [HttpGet]
+        [Route("api/[controller]/{id}")]
         public virtual IActionResult Get(long id)
         {
             try
@@ -46,6 +48,7 @@ namespace SharedKernel.Api.Controllers
         /// Retorna todas as entidades
         /// </summary>
         /// <returns>Lista de Entidades</returns>
+        [HttpGet]
         public virtual IActionResult Get()
         {
             try
