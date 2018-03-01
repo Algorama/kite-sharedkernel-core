@@ -34,10 +34,10 @@ namespace SharedKernel.Domain.Services
                     repo.Insert(entity);
                     session.CommitTransaction();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     session.RollBackTransaction();
-                    throw;
+                    throw ex;
                 }
             }
         }

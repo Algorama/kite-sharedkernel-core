@@ -22,17 +22,17 @@ namespace SharedKernel.EntityFramework.Repositories
 
         public T Get(long id)
         {            
-            return Entities.FirstOrDefault(x => x.Id == id); // AsNoTracking()
+            return Entities.AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
         public IQueryable<T> GetAll()
         {
-            return Entities; //.AsNoTracking();
+            return Entities.AsNoTracking();
         }
 
         public IQueryable<T> GetAll(Expression<Func<T, bool>> @where)
         {
-            return Entities.Where(@where); // .AsNoTracking()
+            return Entities.AsNoTracking().Where(@where);
         }
 
         public IList<T> GetByHql(string comandoHql)
