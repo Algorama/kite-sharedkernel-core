@@ -67,7 +67,7 @@ namespace SharedKernel.Domain.Services
                 try
                 {
                     session.StartTransaction();
-                    var entities = repo.GetAll(@where).ToList();
+                    var entities = repo.Get(@where).ToList();
                     session.CommitTransaction();
                     return entities;
                 }
@@ -82,7 +82,7 @@ namespace SharedKernel.Domain.Services
         public virtual PageResult<T> GetPaged(int page, PageSize size)
         {
             if (page < 1)
-                throw new ValidationException("Número da Página começa em 1");
+                throw new ValidationException("Nï¿½mero da Pï¿½gina comeï¿½a em 1");
 
             using (var session = Helper.OpenSession())
             {

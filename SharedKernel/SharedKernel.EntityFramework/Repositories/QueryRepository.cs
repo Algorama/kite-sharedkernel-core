@@ -22,31 +22,29 @@ namespace SharedKernel.EntityFramework.Repositories
 
         public T Get(long id)
         {            
-            return Entities.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            return Entities.Find(id);
+            //return Entities.AsNoTracking().FirstOrDefault(x => x.Id == id);
+        }
+
+        public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
+        {
+            return Entities.Where(predicate).AsQueryable();
+        }
+
+        public IQueryable<T> Get(Expression<Func<T, bool>> predicate, params string[] include)
+        {
+            IQueryable<T> result = Entities.Where(predicate);
+            
+            foreach (string item in include)
+                result = result.Include(item).AsQueryable();
+            
+            return result.AsQueryable();
         }
 
         public IQueryable<T> GetAll()
         {
-            return Entities.AsNoTracking();
-        }
-
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> @where)
-        {
-            return Entities.AsNoTracking().Where(@where);
-        }
-
-        public IList<T> GetByHql(string comandoHql)
-        {
-            throw new NotImplementedException();
-            //return Session.CreateQuery(comandoHql).List<T>().ToList();
-        }
-
-        public IList<T> GetBySql(string sql)
-        {
-            throw new NotImplementedException();
-            // var result = Session.CreateSQLQuery(sql).AddEntity(typeof(T));
-            // var res = result.List<T>().ToList();
-            // return res;
+            return Entities;
+            //return Entities.AsNoTracking();
         }
 
         public ODataResult<T> GetOData(List<KeyValuePair<string, string>> queryStringParts)
@@ -74,6 +72,6 @@ namespace SharedKernel.EntityFramework.Repositories
             // var result = Session.ODataQuery<T>(queryStringParts, new ODataParserConfiguration { CaseSensitiveLike = false }).List();
 
             // return new ODataResult<T>(result.Count > 0 ? (int)result[0] : 0, dados);
-        }        
+        }
     }
 }

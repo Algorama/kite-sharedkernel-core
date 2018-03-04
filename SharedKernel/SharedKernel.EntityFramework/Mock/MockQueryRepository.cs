@@ -27,19 +27,14 @@ namespace SharedKernel.EntityFramework.Mock
             return Data.AsQueryable();
         }
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> @where)
+        public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
         {
-            return Data.AsQueryable().Where(where);
+            return Data.AsQueryable().Where(predicate);
         }
 
-        public IList<T> GetByHql(string hqlCommand)
+        public IQueryable<T> Get(Expression<Func<T, bool>> predicate, params string[] include)
         {
-            return Data;
-        }
-
-        public IList<T> GetBySql(string sqlCommand)
-        {
-            return Data;
+            return Data.AsQueryable().Where(predicate);
         }
 
         public ODataResult<T> GetOData(List<KeyValuePair<string, string>> queryStringParts)

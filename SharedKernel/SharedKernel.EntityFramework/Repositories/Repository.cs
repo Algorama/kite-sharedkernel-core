@@ -13,12 +13,13 @@ namespace SharedKernel.EntityFramework.Repositories
 
         public void Insert(T entity)
         {
-            Context.Add(entity);
+            Entities.Add(entity);
         }
         
         public void Update(T entity)
         {
-            Context.Update(entity);
+            Context.Entry<T>(entity).State = EntityState.Modified;
+            //Entities.Update(entity);
         }
 
         public void Save(T entity)
@@ -31,13 +32,18 @@ namespace SharedKernel.EntityFramework.Repositories
 
         public void Delete(T entity)
         {
-            Context.Remove(entity);
+            Entities.Remove(entity);
             //Context.Entry(entity).State = EntityState.Deleted;
         }
 
-        public void RunCommand(string hqlCommand)
+        public int RunCommand(string command, params object[] poParams)
         {
-            throw new NotImplementedException();
+            return Context.Database.ExecuteSqlCommand(command, poParams);
+        }
+
+        public void Save()
+        {
+            Context.SaveChanges();
         }
     }
 }

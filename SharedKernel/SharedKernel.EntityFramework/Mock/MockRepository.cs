@@ -17,21 +17,19 @@ namespace SharedKernel.EntityFramework.Mock
             Delete(entity);
             Insert(entity);
         }
-
-        public void Save(T entity)
-        {
-            Delete(entity);
-            Insert(entity);
-        }
-
+        
         public void Delete(T entity)
         {
             Data.Remove(entity);
         }
 
-        public void RunCommand(string hqlCommand)
+        public void Save()
         {
-            
+        }
+
+        public int RunCommand(string command, params object[] poParams)
+        {
+            return 0;
         }
 
         private static long GenerateId()
