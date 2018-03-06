@@ -59,7 +59,7 @@ namespace SharedKernel.Api.Controllers
         /// <param name="changePasswordRequest">Informações para a troca de senha obrigatória</param>
         /// <returns>Ok</returns>
         [HttpPost]
-        [Route("api/trocasenha/obrigatoria")]
+        [Route("TrocaSenha")]
         public ActionResult PostTrocaSenha([FromBody]ChangePasswordRequest changePasswordRequest)
         {
             try

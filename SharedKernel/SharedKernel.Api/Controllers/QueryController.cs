@@ -23,7 +23,7 @@ namespace SharedKernel.Api.Controllers
         /// <param name="id">ID da entidade</param>
         /// <returns>Entidade</returns>
         [HttpGet]
-        [Route("api/[controller]/{id}")]
+        [Route("{id}")]
         public virtual IActionResult Get(long id)
         {
             try
