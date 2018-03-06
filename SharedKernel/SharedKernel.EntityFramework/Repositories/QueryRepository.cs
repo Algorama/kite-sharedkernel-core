@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore; 
 using SharedKernel.Domain.Dtos;
 using SharedKernel.Domain.Entities;
@@ -21,21 +22,38 @@ namespace SharedKernel.EntityFramework.Repositories
         }
 
         public T Get(long id)
-        {            
-            return Entities.Find(id);
-            //return Entities.AsNoTracking().FirstOrDefault(x => x.Id == id);
+        {
+            var result = Entities.Where(x => x.Id == id).AsQueryable();
+
+            // Incluindo automaticamente o primeiro nível de associações e coleções
+            var include = GetInclude(typeof(T));
+            foreach (var item in include)
+                result = result.Include(item).AsQueryable();
+
+            return result.FirstOrDefault();
+
+            //return Entities.Find(id);
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
         {
-            return Entities.Where(predicate).AsQueryable();
+            var result = Entities.Where(predicate).AsQueryable();
+
+            // Incluindo automaticamente o primeiro nível de associações e coleções
+            var include = GetInclude(typeof(T));
+            foreach (var item in include)
+                result = result.Include(item).AsQueryable();
+
+            return result;
+
+            //return Entities.Where(predicate).AsQueryable();
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate, params string[] include)
         {
             IQueryable<T> result = Entities.Where(predicate);
             
-            foreach (string item in include)
+            foreach (var item in include)
                 result = result.Include(item).AsQueryable();
             
             return result.AsQueryable();
@@ -43,8 +61,16 @@ namespace SharedKernel.EntityFramework.Repositories
 
         public IQueryable<T> GetAll()
         {
-            return Entities;
-            //return Entities.AsNoTracking();
+            var result = Entities.AsQueryable();
+
+            // Incluindo automaticamente o primeiro nível de associações e coleções
+            var include = GetInclude(typeof(T));
+            foreach (var item in include)
+                result = result.Include(item).AsQueryable();
+
+            return result;
+
+            //return Entities;
         }
 
         public ODataResult<T> GetOData(List<KeyValuePair<string, string>> queryStringParts)
@@ -72,6 +98,35 @@ namespace SharedKernel.EntityFramework.Repositories
             // var result = Session.ODataQuery<T>(queryStringParts, new ODataParserConfiguration { CaseSensitiveLike = false }).List();
 
             // return new ODataResult<T>(result.Count > 0 ? (int)result[0] : 0, dados);
+        }
+
+        private static IEnumerable<string> GetInclude(Type type)
+        {
+            var lista = new List<string>();
+
+            var props = type.GetProperties();
+            foreach (var prop in props)
+            {
+                // Associações
+                if (typeof(EntityBase).IsAssignableFrom(prop.PropertyType))
+                    lista.Add(prop.Name);
+
+                // Coleções
+                if(IsCollection(prop))
+                    lista.Add(prop.Name);
+            }
+
+            return lista.ToArray();
+        }
+
+        private static bool IsCollection(PropertyInfo prop)
+        {
+            var propType = prop.PropertyType;
+            if (!propType.IsGenericType)
+                return false;
+
+            var genericType = propType.GetGenericTypeDefinition();
+            return genericType == typeof(IList<>);
         }
     }
 }
