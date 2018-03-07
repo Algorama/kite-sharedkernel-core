@@ -12,126 +12,89 @@ namespace SharedKernel.Domain.Services
 {
     public class QueryService<T> : IQueryService<T> where T : EntityBase
     {
-        public IHelperRepository Helper { get; }
+        public IQueryRepository<T> Repository { get; }
 
-        public QueryService(IHelperRepository helper)
+        public QueryService(IQueryRepository<T> repository)
         {
-            Helper = helper;
+            Repository = repository;
         }
 
         public virtual T Get(long id)
         {
-            using (var session = Helper.OpenSession())
+            try
             {
-                var repo = session.QueryRepository<T>();
-                try
-                {
-                    session.StartTransaction();
-                    var entity = repo.Get(id);
-                    session.CommitTransaction();
-                    return entity;
-                }
-                catch (Exception)
-                {
-                    session.RollBackTransaction();
-                    throw;
-                }
+                var entity = Repository.Get(id);
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public virtual IList<T> GetAll()
         {
-            using (var session = Helper.OpenSession())
+            try
             {
-                var repo = session.QueryRepository<T>();
-                try
-                {
-                    session.StartTransaction();
-                    var entities = repo.GetAll().ToList();
-                    session.CommitTransaction();
-                    return entities;
-                }
-                catch (Exception)
-                {
-                    session.RollBackTransaction();
-                    throw;
-                }
+                var entities = Repository.GetAll().ToList();
+                return entities;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public virtual IList<T> GetAll(Expression<Func<T, bool>> @where)
         {
-            using (var session = Helper.OpenSession())
+            try
             {
-                var repo = session.QueryRepository<T>();
-                try
-                {
-                    session.StartTransaction();
-                    var entities = repo.Get(@where).ToList();
-                    session.CommitTransaction();
-                    return entities;
-                }
-                catch (Exception)
-                {
-                    session.RollBackTransaction();
-                    throw;
-                }
+                var entities = Repository.Get(@where).ToList();
+                return entities;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
-
         public virtual PageResult<T> GetPaged(int page, PageSize size)
         {
             if (page < 1)
-                throw new ValidationException("N�mero da P�gina come�a em 1");
+                throw new ValidationException("Número da Página começa em 1");
 
-            using (var session = Helper.OpenSession())
+            try
             {
-                var repo = session.QueryRepository<T>();
-                try
-                {
-                    session.StartTransaction();
+                var result = new PageResult<T> { Page = page };
+                var query = Repository.GetAll();
 
-                    var result = new PageResult<T> { Page = page };
-                    var query = repo.GetAll();
+                result.TotalItems = query.Count();
+                result.PageSize = (int)size;
+                result.TotalPages =
+                    (int)Math.Ceiling((double)result.TotalItems / (int)size);
 
-                    result.TotalItems = query.Count();
-                    result.PageSize = (int)size;
-                    result.TotalPages =
-                        (int)Math.Ceiling((double)result.TotalItems / (int)size);
+                result.Data = query
+                    .Skip((int)size * --page)
+                    .Take((int)size)
+                    .ToList();
 
-                    result.Data = query
-                        .Skip((int)size * --page)
-                        .Take((int)size)
-                        .ToList();
-
-                    session.CommitTransaction();
-                    return result;
-                }
-                catch (Exception)
-                {
-                    session.RollBackTransaction();
-                    throw;
-                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public virtual ODataResult<T> GetOData(List<KeyValuePair<string, string>> queryStringParts)
         {
-            using (var session = Helper.OpenSession())
+            try
             {
-                var repo = session.QueryRepository<T>();
-                try
-                {
-                    session.StartTransaction();
-                    var result = repo.GetOData(queryStringParts);
-                    session.CommitTransaction();
-                    return result;
-                }
-                catch (Exception)
-                {
-                    session.RollBackTransaction();
-                    throw;
-                }
+                var result = Repository.GetOData(queryStringParts);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

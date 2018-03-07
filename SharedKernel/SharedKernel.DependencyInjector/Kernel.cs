@@ -37,13 +37,17 @@ namespace SharedKernel.DependencyInjector
         public static void Start()
         {
             StartBase();
-            _kernel.Register<IHelperRepository, HelperRepository>();
+            //_kernel.Register<IHelperRepository, HelperRepository>();
+            _kernel.Register(typeof(IQueryRepository<>), typeof(QueryRepository<>));
+            _kernel.Register(typeof(IRepository<>), typeof(Repository<>));
         }
 
         public static void StartMock()
         {
             StartBase();
-            _kernel.Register<IHelperRepository, MockHelperRepository>();
+            //_kernel.Register<IHelperRepository, MockHelperRepository>();
+            _kernel.Register(typeof(IQueryRepository<>), typeof(MockQueryRepository<>));
+            _kernel.Register(typeof(IRepository<>), typeof(MockRepository<>));
         }
 
         public static void IntegrateAspNet(IServiceCollection services)
@@ -61,7 +65,8 @@ namespace SharedKernel.DependencyInjector
             _kernel.RegisterMvcControllers(app);
             _kernel.Register(typeof(IQueryService<>), typeof(QueryService<>));
             _kernel.Register(typeof(ICrudService<>), typeof(CrudService<>));
-            _kernel.Register<IHelperRepository, HelperRepository>();
+            _kernel.Register(typeof(IQueryRepository<>), typeof(QueryRepository<>));
+            _kernel.Register(typeof(IRepository<>), typeof(Repository<>));
         }
 
         public static T Get<T>() where T : class
@@ -80,6 +85,14 @@ namespace SharedKernel.DependencyInjector
                 throw new Exception("Kernel não foi inicializado");
 
             _kernel.Register<TFrom, TTo>();
+        }
+
+        public static void Bind(Type type1, Type type2)
+        {
+            if (_kernel == null)
+                throw new Exception("Kernel não foi inicializado");
+
+            _kernel.Register(type1, type2);
         }
     }
 }

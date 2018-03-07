@@ -12,7 +12,7 @@ namespace SharedKernel.Domain.Services
 {
     public class UsuarioService : CrudService<Usuario>, IUsuarioService
     {
-        public UsuarioService(IHelperRepository helper, UsuarioValidator validator) : base(helper, validator)
+        public UsuarioService(IRepository<Usuario> repository, UsuarioValidator validator) : base(repository, validator)
         {
             validator.Service = this;
         }

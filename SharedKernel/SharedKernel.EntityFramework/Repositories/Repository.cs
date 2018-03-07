@@ -19,7 +19,6 @@ namespace SharedKernel.EntityFramework.Repositories
         public void Update(T entity)
         {
             Context.Entry<T>(entity).State = EntityState.Modified;
-            //Entities.Update(entity);
         }
 
         public void Save(T entity)
@@ -33,7 +32,6 @@ namespace SharedKernel.EntityFramework.Repositories
         public void Delete(T entity)
         {
             Entities.Remove(entity);
-            //Context.Entry(entity).State = EntityState.Deleted;
         }
 
         public int RunCommand(string command, params object[] poParams)

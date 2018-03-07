@@ -4,9 +4,9 @@ namespace SharedKernel.EntityFramework.Mock
 {
     public class MockHelperRepository : IHelperRepository
     {
-        public ISessionRepository OpenSession()
+        public void CreateDb()
         {
-            return new MockSessionRepository();
+            throw new System.NotImplementedException();
         }
     }
 }

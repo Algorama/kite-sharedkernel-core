@@ -31,8 +31,6 @@ namespace SharedKernel.EntityFramework.Repositories
                 result = result.Include(item).AsQueryable();
 
             return result.FirstOrDefault();
-
-            //return Entities.Find(id);
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
@@ -45,8 +43,6 @@ namespace SharedKernel.EntityFramework.Repositories
                 result = result.Include(item).AsQueryable();
 
             return result;
-
-            //return Entities.Where(predicate).AsQueryable();
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate, params string[] include)
@@ -69,8 +65,6 @@ namespace SharedKernel.EntityFramework.Repositories
                 result = result.Include(item).AsQueryable();
 
             return result;
-
-            //return Entities;
         }
 
         public ODataResult<T> GetOData(List<KeyValuePair<string, string>> queryStringParts)
