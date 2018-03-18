@@ -1,13 +1,14 @@
 using System;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 using SharedKernel.Test.Moks;
 
 namespace SharedKernel.Test.Entities
 {
+    [TestClass]
     public class TestEntity
     {
-        [Fact]
+        [TestMethod]
         public void Test_Persisted_Entities_Equals()
         {
             var foo1 = new Foo { Id = 1 };
@@ -16,7 +17,7 @@ namespace SharedKernel.Test.Entities
             foo1.Should().Be(foo2, because: "they must have the same Id");
         }
 
-        [Fact]
+        [TestMethod]
         public void Test_Persisted_Entities_Not_Equals()
         {
             var foo1 = new Foo { Id = 1 };
@@ -25,7 +26,7 @@ namespace SharedKernel.Test.Entities
             foo1.Should().NotBe(foo2, because: "they doesn't must have the same Id");
         }
 
-        [Fact]
+        [TestMethod]
         public void Test_Not_Persisted_Entities_Equals()
         {
             var foo1 = new Foo();
@@ -34,7 +35,7 @@ namespace SharedKernel.Test.Entities
             foo1.Should().Be(foo2, because: "they must have the same reference");
         }
 
-        [Fact]
+        [TestMethod]
         public void Test_Not_Persisted_Entities_Not_Equals()
         {
             var foo1 = new Foo();
@@ -43,7 +44,7 @@ namespace SharedKernel.Test.Entities
             foo1.Should().NotBe(foo2, because: "they doesn't must have the same reference");
         }
 
-        [Fact]
+        [TestMethod]
         public void Test_Can_Clone_Entity()
         {
             var foo1 = new Foo{ Bar = 123 };
