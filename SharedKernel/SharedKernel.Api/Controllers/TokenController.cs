@@ -40,7 +40,7 @@ namespace SharedKernel.Api.Controllers
                 if (usuario.DeveTrocarSenha) return BadRequest("Troca de Senha Obrigatória!");
 
                 var token = usuario.GerarTokenString();
-                return Ok(token);
+                return Ok(new { Token = token });
             }
             catch (ValidatorException ex)
             {
@@ -76,7 +76,7 @@ namespace SharedKernel.Api.Controllers
                 if (usuario == null) return Unauthorized();
 
                 var token = usuario.GerarTokenString();
-                return Ok(token);
+                return Ok(new { Token = token });
             }
             catch (ValidatorException ex)
             {
