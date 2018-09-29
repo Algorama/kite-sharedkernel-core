@@ -31,7 +31,6 @@ namespace SharedKernel.Domain.Services
                 entity.DataInclusao = DateTime.Now;
                 entity.UsuarioInclusao = user;
                 Repository.Insert(entity);
-                Repository.Save();
             }
             catch (Exception ex)
             {
@@ -55,7 +54,6 @@ namespace SharedKernel.Domain.Services
                     entity.UsuarioInclusao = user;
                     Repository.Insert(entity);
                 }
-                Repository.Save();
             }
             catch (Exception ex)
             {
@@ -76,7 +74,6 @@ namespace SharedKernel.Domain.Services
                 entity.DataAlteracao = DateTime.Now;
                 entity.UsuarioAlteracao = user;
                 Repository.Update(entity);
-                Repository.Save();
             }
             catch (Exception ex)
             {
@@ -99,7 +96,6 @@ namespace SharedKernel.Domain.Services
                     entity.UsuarioAlteracao = user;
                     Repository.Update(entity);
                 }
-                Repository.Save();
             }
             catch (Exception ex)
             {
@@ -116,19 +112,6 @@ namespace SharedKernel.Domain.Services
             try
             {
                 Repository.Delete(entity);
-                Repository.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-                
-        public virtual void RunCommand(string command)
-        {
-            try
-            {
-                Repository.RunCommand(command);
             }
             catch (Exception ex)
             {

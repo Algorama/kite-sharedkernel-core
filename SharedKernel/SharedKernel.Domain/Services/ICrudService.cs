@@ -9,6 +9,5 @@ namespace SharedKernel.Domain.Services
         void Update(string user, params T[] entities);
         void Update(T entity, string user);
         void Delete(T entity);
-        void RunCommand(string hqlCommand);
     }
 }

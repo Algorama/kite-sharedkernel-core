@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using SharedKernel.Domain.Entities;
-using SharedKernel.Domain.Repositories;
 
-namespace SharedKernel.EntityFramework.Mock
+namespace SharedKernel.Domain.Repositories.Mock
 {
     public class MockRepository<T> : MockQueryRepository<T>, IRepository<T> where T : EntityBase, IAggregateRoot
     {
@@ -15,21 +14,12 @@ namespace SharedKernel.EntityFramework.Mock
         public void Update(T entity)
         {
             Delete(entity);
-            Insert(entity);
+            Data.Add(entity);
         }
         
         public void Delete(T entity)
         {
             Data.Remove(entity);
-        }
-
-        public void Save()
-        {
-        }
-
-        public int RunCommand(string command, params object[] poParams)
-        {
-            return 0;
         }
 
         private static long GenerateId()

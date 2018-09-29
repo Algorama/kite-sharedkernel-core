@@ -13,6 +13,5 @@ namespace SharedKernel.Domain.Services
         IList<T> GetAll();
         IList<T> GetAll(Expression<Func<T, bool>> where);
         PageResult<T> GetPaged(int page, PageSize size);
-        ODataResult<T> GetOData(List<KeyValuePair<string, string>> queryStringParts);
     }
 }

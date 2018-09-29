@@ -1,6 +1,4 @@
-﻿using SharedKernel.Domain.Repositories;
-
-namespace SharedKernel.EntityFramework.Mock
+﻿namespace SharedKernel.Domain.Repositories.Mock
 {
     public class MockHelperRepository : IHelperRepository
     {

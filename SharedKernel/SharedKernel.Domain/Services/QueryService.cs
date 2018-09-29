@@ -57,6 +57,7 @@ namespace SharedKernel.Domain.Services
                 throw ex;
             }
         }
+
         public virtual PageResult<T> GetPaged(int page, PageSize size)
         {
             if (page < 1)
@@ -77,19 +78,6 @@ namespace SharedKernel.Domain.Services
                     .Take((int)size)
                     .ToList();
 
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public virtual ODataResult<T> GetOData(List<KeyValuePair<string, string>> queryStringParts)
-        {
-            try
-            {
-                var result = Repository.GetOData(queryStringParts);
                 return result;
             }
             catch (Exception ex)
