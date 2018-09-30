@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="SharedKernel.Test.Moks" assembly="SharedKernel.Test">
+
+  <class name="Foo" table="Foo" schema="dbo" lazy="false"  >
+    <id name="Id" column="Id" type="Int64">
+      <generator class="native" />
+    </id>
+    
+    <property name="DataInclusao"      type="DateTime"              not-null="true" update="false" />
+    <property name="DataAlteracao"     type="DateTime"              not-null="false" />
+    <property name="UsuarioInclusao"   type="string"   length="100" not-null="true" update="false" />
+    <property name="UsuarioAlteracao"  type="string"   length="100" not-null="false" />
+    
+    <property name="Bar" column="Bar" type="int"  not-null="true"></property>
+  </class>
+  
+</hibernate-mapping>

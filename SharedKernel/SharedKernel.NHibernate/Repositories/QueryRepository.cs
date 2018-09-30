@@ -3,7 +3,7 @@ using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Repositories;
 using NHibernate;
 
-namespace SharedKernel.EntityFramework.Repositories
+namespace SharedKernel.NHibernate.Repositories
 {
     public class QueryRepository<T> : IQueryRepository<T> where T : IEntity
     {

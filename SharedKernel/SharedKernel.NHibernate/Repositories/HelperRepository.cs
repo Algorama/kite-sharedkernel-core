@@ -5,7 +5,7 @@ using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using SharedKernel.Domain.Repositories;
 
-namespace SharedKernel.EntityFramework.Repositories
+namespace SharedKernel.NHibernate.Repositories
 {
     public class HelperRepository : IHelperRepository
     {
@@ -32,7 +32,7 @@ namespace SharedKernel.EntityFramework.Repositories
             return SessionFactory().OpenSession();
         }
 
-        public void CreateDb()
+        public static void CreateSchema()
         {
             var caminhoArquivo = GetPath() + "\\nhibernate.cfg.xml";
             var config = new Configuration().Configure(caminhoArquivo);
@@ -43,6 +43,11 @@ namespace SharedKernel.EntityFramework.Repositories
             schemaExport.Create(true, true);     // Gera e executa o Script de Create
             // schemaExport.Create(true, false); // Gera o Script de Create sem executar
             Console.WriteLine("Fim da criação da estrutura do database!");
+        }
+
+        public void CreateDb()
+        {
+            CreateSchema();
         }
     }
 }

@@ -2,7 +2,7 @@ using NHibernate;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Repositories;
 
-namespace SharedKernel.EntityFramework.Repositories
+namespace SharedKernel.NHibernate.Repositories
 {
     public class Repository<T> : QueryRepository<T>, IRepository<T> where T : EntityBase, IAggregateRoot
     {

@@ -6,10 +6,19 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="NHibernateMaps\Foo.hbm.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="NHibernateMaps\Foo.hbm.xml" />
+  </ItemGroup>
+
   
   <ItemGroup>
     <ProjectReference Include="..\SharedKernel.Domain\SharedKernel.Domain.csproj" />
     <ProjectReference Include="..\SharedKernel.DependencyInjector\SharedKernel.DependencyInjector.csproj" />
+    <ProjectReference Include="..\SharedKernel.NHibernate\SharedKernel.NHibernate.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +27,12 @@
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
     <PackageReference Include="FluentAssertions" Version="5.0.0-rc0002" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="nhibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
