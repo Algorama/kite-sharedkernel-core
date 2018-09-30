@@ -38,7 +38,7 @@ namespace SharedKernel.Test.Repositories
         [TestMethod]
         public void Test_GetAll()
         {
-            var foos = _repository.GetAll();
+            var foos = _repository.Query.ToList();
             foos.Any().Should().Be(true);
 
             foreach (var foo in foos)
@@ -48,7 +48,7 @@ namespace SharedKernel.Test.Repositories
         [TestMethod]
         public void Test_Get_Filtered()
         {
-            var foos = _repository.Get(x => x.Bar > 15);
+            var foos = _repository.Query.Where(x => x.Bar > 15);
             foos.Any().Should().Be(true);
 
             foreach (var foo in foos)
@@ -58,7 +58,7 @@ namespace SharedKernel.Test.Repositories
         [TestMethod]
         public void Test_Get_Linq()
         {
-            var foos = from x in _repository.GetAll()
+            var foos = from x in _repository.Query
                        where x.Bar < 30
                        orderby x.Bar descending
                        select x;

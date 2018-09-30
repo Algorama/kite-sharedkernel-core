@@ -36,7 +36,7 @@ namespace SharedKernel.Domain.Services
         {
             try
             {
-                var entities = Repository.GetAll().ToList();
+                var entities = Repository.Query.ToList();
                 return entities;
             }
             catch (Exception ex)
@@ -49,7 +49,7 @@ namespace SharedKernel.Domain.Services
         {
             try
             {
-                var entities = Repository.Get(@where).ToList();
+                var entities = Repository.Query.Where(@where).ToList();
                 return entities;
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace SharedKernel.Domain.Services
             try
             {
                 var result = new PageResult<T> { Page = page };
-                var query = Repository.GetAll();
+                var query = Repository.Query;
 
                 result.TotalItems = query.Count();
                 result.PageSize = (int)size;

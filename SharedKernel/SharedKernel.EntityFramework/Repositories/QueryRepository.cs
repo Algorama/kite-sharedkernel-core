@@ -55,16 +55,19 @@ namespace SharedKernel.EntityFramework.Repositories
             return result.AsQueryable();
         }
 
-        public IQueryable<T> GetAll()
+        public IQueryable<T> Query
         {
-            var result = Entities.AsQueryable();
+            get
+            {
+                var result = Entities.AsQueryable();
 
-            // Incluindo automaticamente o primeiro nível de associações e coleções
-            var include = GetInclude(typeof(T));
-            foreach (var item in include)
-                result = result.Include(item).AsQueryable();
+                // Incluindo automaticamente o primeiro nível de associações e coleções
+                var include = GetInclude(typeof(T));
+                foreach (var item in include)
+                    result = result.Include(item).AsQueryable();
 
-            return result;
+                return result;
+            }
         }
 
         public ODataResult<T> GetOData(List<KeyValuePair<string, string>> queryStringParts)

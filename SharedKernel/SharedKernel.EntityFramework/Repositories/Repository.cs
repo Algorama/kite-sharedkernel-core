@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Repositories;
