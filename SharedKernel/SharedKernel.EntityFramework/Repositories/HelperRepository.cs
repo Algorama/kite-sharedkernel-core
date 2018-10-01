@@ -11,18 +11,10 @@ namespace SharedKernel.EntityFramework.Repositories
         {
             _context = context;
         }
-        
-        public void CreateDb()
-        {
-            if (_context == null) return;
-
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
-        }
 
         public ISessionRepository OpenSession()
         {
-            throw new System.NotImplementedException();
+            return new SessionRepository(_context);
         }
     }
 }

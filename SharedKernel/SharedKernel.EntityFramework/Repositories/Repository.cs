@@ -20,14 +20,6 @@ namespace SharedKernel.EntityFramework.Repositories
             Context.Entry<T>(entity).State = EntityState.Modified;
         }
 
-        public void Save(T entity)
-        {
-            if(entity.Id == 0)
-                Insert(entity);
-            else
-                Update(entity);
-        }
-
         public void Delete(T entity)
         {
             Entities.Remove(entity);
@@ -36,11 +28,6 @@ namespace SharedKernel.EntityFramework.Repositories
         public int RunCommand(string command, params object[] poParams)
         {
             return Context.Database.ExecuteSqlCommand(command, poParams);
-        }
-
-        public void Save()
-        {
-            Context.SaveChanges();
         }
     }
 }

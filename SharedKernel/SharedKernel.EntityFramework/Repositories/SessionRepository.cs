@@ -1,48 +1,46 @@
-﻿//using SharedKernel.Domain.Entities;
-//using SharedKernel.Domain.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using SharedKernel.Domain.Entities;
+using SharedKernel.Domain.Repositories;
 
-//namespace SharedKernel.EntityFramework.Repositories
-//{
-//    public class SessionRepository : ISessionRepository
-//    {
-//        private readonly  _session;
-//        private ITransaction _transaction;
+namespace SharedKernel.EntityFramework.Repositories
+{
+    public class SessionRepository : ISessionRepository
+    {
+        private readonly DbContext _dbContext;
 
-//        public SessionRepository(ISession session)
-//        {
-//            _session = session;
-//        }
+        public SessionRepository(DbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
-//        public IQueryRepository<T> GetQueryRepository<T>() where T : EntityBase
-//        {
-//            return new QueryRepository<T>(_session);
-//        }
+        public IQueryRepository<T> GetQueryRepository<T>() where T : EntityBase
+        {
+            return new QueryRepository<T>(_dbContext);
+        }
 
-//        public IRepository<T> GetRepository<T>() where T : EntityBase, IAggregateRoot
-//        {
-//            return new Repository<T>(_session);
-//        }
+        public IRepository<T> GetRepository<T>() where T : EntityBase, IAggregateRoot
+        {
+            return new Repository<T>(_dbContext);
+        }
 
-//        public void StartTransaction()
-//        {
-//            _transaction = _session.BeginTransaction();
-//        }
+        public void StartTransaction()
+        {
+            _dbContext.Database.BeginTransaction();
+        }
 
-//        public void CommitTransaction()
-//        {
-//            _transaction.Commit();
-//            _transaction.Dispose();
-//        }
+        public void CommitTransaction()
+        {
+            _dbContext.Database.CommitTransaction();
+            _dbContext.SaveChanges();
+        }
 
-//        public void RollBackTransaction()
-//        {
-//            _transaction.Rollback();
-//            _transaction.Dispose();
-//        }
+        public void RollBackTransaction()
+        {
+            _dbContext.Database.RollbackTransaction();
+        }
 
-//        public void Dispose()
-//        {
-//            _session.Close();
-//        }
-//    }
-//}
+        public void Dispose()
+        {
+        }
+    }
+}
