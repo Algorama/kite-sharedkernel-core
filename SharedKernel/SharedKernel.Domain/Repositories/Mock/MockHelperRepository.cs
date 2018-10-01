@@ -2,9 +2,9 @@
 {
     public class MockHelperRepository : IHelperRepository
     {
-        public void CreateDb()
+        public ISessionRepository OpenSession()
         {
-            throw new System.NotImplementedException();
+            return new MockSessionRepository();
         }
     }
 }

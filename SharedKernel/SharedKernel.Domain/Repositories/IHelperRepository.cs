@@ -2,6 +2,6 @@
 {
     public interface IHelperRepository
     {
-        void CreateDb();
+        ISessionRepository OpenSession();
     }
 }

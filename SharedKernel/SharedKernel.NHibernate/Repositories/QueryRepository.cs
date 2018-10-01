@@ -5,7 +5,7 @@ using NHibernate;
 
 namespace SharedKernel.NHibernate.Repositories
 {
-    public class QueryRepository<T> : IQueryRepository<T> where T : IEntity
+    public class QueryRepository<T> : IQueryRepository<T> where T : EntityBase
     {
         public ISession Session { get; set; }
 

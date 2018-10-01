@@ -19,5 +19,10 @@ namespace SharedKernel.EntityFramework.Repositories
             _context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
         }
+
+        public ISessionRepository OpenSession()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
