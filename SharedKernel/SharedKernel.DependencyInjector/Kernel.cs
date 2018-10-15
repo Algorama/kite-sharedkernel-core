@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using SharedKernel.Domain.Repositories;
 using SharedKernel.Domain.Repositories.Mock;
 using SharedKernel.Domain.Services;
-using SharedKernel.EntityFramework.Repositories;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
@@ -27,32 +26,27 @@ namespace SharedKernel.DependencyInjector
             return _kernel;
         }
 
-        private static void StartBase()
+        public static void StartMockRepository()
         {
-            _kernel = new Container();
-            _kernel.Register(typeof(IQueryService<>), typeof(QueryService<>));
-            _kernel.Register(typeof(ICrudService<>), typeof(CrudService<>));
+            if (_kernel == null) _kernel = new Container();
+            _kernel.Register<IHelperRepository, MockHelperRepository>();
         }
 
-        public static void Start()
+        public static void StartNHibernate()
         {
-            StartBase();
-            //_kernel.Register<IHelperRepository, HelperRepository>();
-            _kernel.Register(typeof(IQueryRepository<>), typeof(QueryRepository<>));
-            _kernel.Register(typeof(IRepository<>), typeof(Repository<>));
+            if(_kernel == null) _kernel = new Container();
+            _kernel.Register<IHelperRepository, SharedKernel.NHibernate.Repositories.HelperRepository>();
         }
 
-        public static void StartMock()
+        public static void StartEntityFramework()
         {
-            StartBase();
-            //_kernel.Register<IHelperRepository, MockHelperRepository>();
-            _kernel.Register(typeof(IQueryRepository<>), typeof(MockQueryRepository<>));
-            _kernel.Register(typeof(IRepository<>), typeof(MockRepository<>));
+            if (_kernel == null) _kernel = new Container();
+            _kernel.Register<IHelperRepository, SharedKernel.EntityFramework.Repositories.HelperRepository>();
         }
 
         public static void IntegrateAspNet(IServiceCollection services)
         {
-            _kernel = new Container();
+            if (_kernel == null) _kernel = new Container();
             _kernel.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(_kernel));
@@ -65,8 +59,6 @@ namespace SharedKernel.DependencyInjector
             _kernel.RegisterMvcControllers(app);
             _kernel.Register(typeof(IQueryService<>), typeof(QueryService<>));
             _kernel.Register(typeof(ICrudService<>), typeof(CrudService<>));
-            _kernel.Register(typeof(IQueryRepository<>), typeof(QueryRepository<>));
-            _kernel.Register(typeof(IRepository<>), typeof(Repository<>));
         }
 
         public static T Get<T>() where T : class

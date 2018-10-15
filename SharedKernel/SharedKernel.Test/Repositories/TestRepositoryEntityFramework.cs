@@ -4,7 +4,6 @@ using SharedKernel.Domain.Repositories;
 using SharedKernel.Test.Moks;
 using System;
 using System.Linq;
-using SharedKernel.EntityFramework.Repositories;
 using SharedKernel.Test.EntityFramework;
 
 namespace SharedKernel.Test.Repositories
@@ -19,7 +18,8 @@ namespace SharedKernel.Test.Repositories
         {
             EntityFrameworkHelper.CreateSchema();
 
-            _helperRepository = new HelperRepository(EntityFrameworkHelper.CreateContext());
+            DependencyInjector.Kernel.StartEntityFramework();
+            _helperRepository = DependencyInjector.Kernel.Get<IHelperRepository>();
 
             using (var session = _helperRepository.OpenSession())
             {

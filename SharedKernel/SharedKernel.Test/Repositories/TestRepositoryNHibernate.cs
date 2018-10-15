@@ -18,7 +18,8 @@ namespace SharedKernel.Test.Repositories
         {
             NHibernateHelper.CreateSchema();
 
-            _helperRepository = new HelperRepository();
+            DependencyInjector.Kernel.StartNHibernate();
+            _helperRepository = DependencyInjector.Kernel.Get<IHelperRepository>();
 
             using (var session = _helperRepository.OpenSession())
             {

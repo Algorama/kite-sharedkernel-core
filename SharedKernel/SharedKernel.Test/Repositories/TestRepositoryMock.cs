@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharedKernel.Domain.Repositories;
-using SharedKernel.Domain.Repositories.Mock;
 using SharedKernel.Test.Moks;
 using System;
 using System.Linq;
@@ -16,9 +15,10 @@ namespace SharedKernel.Test.Repositories
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
-            _helperRepository = new MockHelperRepository();
+            DependencyInjector.Kernel.StartMockRepository();
+            _helperRepository = DependencyInjector.Kernel.Get<IHelperRepository>();
 
-            using(var session = _helperRepository.OpenSession())
+            using (var session = _helperRepository.OpenSession())
             {
                 var repo = session.GetRepository<Foo>();
                 try
