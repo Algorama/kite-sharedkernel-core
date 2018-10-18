@@ -3,7 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharedKernel.Domain.Repositories;
 using SharedKernel.Test.Moks;
 using System;
+using System.IO;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using SharedKernel.DependencyInjector;
 using SharedKernel.Test.EntityFramework;
 
 namespace SharedKernel.Test.Repositories
@@ -11,14 +15,28 @@ namespace SharedKernel.Test.Repositories
     [TestClass]
     public class TestRepositoryEntityFramework
     {
+        private static IConfigurationRoot _configuration;
         private static IHelperRepository _helperRepository;
 
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
+            _configuration = builder.Build();
+
             EntityFrameworkHelper.CreateSchema();
 
             DependencyInjector.Kernel.StartEntityFramework();
+
+            var kernel = Kernel.GetKernel();
+
+            kernel.Register<DbContext>(() =>
+            {
+                var opBuilder = new DbContextOptionsBuilder<SharedKernelTestContext>();
+                opBuilder.UseSqlServer(_configuration.GetConnectionString("SharedKernel.Test"));
+                return new SharedKernelTestContext(opBuilder.Options);
+            });
+
             _helperRepository = DependencyInjector.Kernel.Get<IHelperRepository>();
 
             using (var session = _helperRepository.OpenSession())
