@@ -5,6 +5,7 @@ using SharedKernel.NHibernate.Repositories;
 using SharedKernel.Test.Moks;
 using System;
 using System.Linq;
+using System.Data.SqlClient;
 
 namespace SharedKernel.Test.Repositories
 {

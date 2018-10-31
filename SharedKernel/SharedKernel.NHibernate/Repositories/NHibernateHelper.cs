@@ -3,7 +3,7 @@ using System.Reflection;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-
+    
 namespace SharedKernel.NHibernate.Repositories
 {
     public class NHibernateHelper

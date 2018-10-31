@@ -3,7 +3,7 @@
   <session-factory>
 
     <!-- configurations -->
-    <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver </property>
+    <property name="connection.driver_class">NHibernate.Driver.Sql2008ClientDriver</property>
     <property name="dialect">NHibernate.Dialect.MsSql2008Dialect</property>
     <property name="connection.connection_string">
       Server=(local);initial catalog=SharedKernel.Test;persist security info=True;Integrated Security=SSPI;
