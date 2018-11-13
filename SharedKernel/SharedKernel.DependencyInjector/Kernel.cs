@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SharedKernel.Domain.Repositories;
 using SharedKernel.Domain.Repositories.Mock;
-using SharedKernel.Domain.Services;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
@@ -35,13 +34,13 @@ namespace SharedKernel.DependencyInjector
         public static void StartNHibernate()
         {
             if(_kernel == null) _kernel = new Container();
-            _kernel.Register<IHelperRepository, SharedKernel.NHibernate.Repositories.HelperRepository>();
+            _kernel.Register<IHelperRepository, NHibernate.Repositories.HelperRepository>();
         }
 
         public static void StartEntityFramework()
         {
             if (_kernel == null) _kernel = new Container();
-            _kernel.Register<IHelperRepository, SharedKernel.EntityFramework.Repositories.HelperRepository>();
+            _kernel.Register<IHelperRepository, EntityFramework.Repositories.HelperRepository>();
         }
 
         public static void IntegrateAspNet(IServiceCollection services)
@@ -57,8 +56,6 @@ namespace SharedKernel.DependencyInjector
         public static void StartAspNet(IConfiguration configuration, IApplicationBuilder app)
         {
             _kernel.RegisterMvcControllers(app);
-            _kernel.Register(typeof(IQueryService<>), typeof(QueryService<>));
-            _kernel.Register(typeof(ICrudService<>), typeof(CrudService<>));
         }
 
         public static T Get<T>() where T : class

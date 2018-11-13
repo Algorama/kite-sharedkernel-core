@@ -10,9 +10,9 @@ using SharedKernel.Domain.ValueObjects;
 
 namespace SharedKernel.Domain.Services
 {
-    public class UsuarioService : CrudService<Usuario>, IUsuarioService
+    public class UsuarioService : CrudService<Usuario>
     {
-        public UsuarioService(IRepository<Usuario> repository, UsuarioValidator validator) : base(repository, validator)
+        public UsuarioService(IHelperRepository helperRepository, UsuarioValidator validator) : base(helperRepository, validator)
         {
             validator.Service = this;
         }

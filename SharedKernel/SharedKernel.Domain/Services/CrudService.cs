@@ -6,15 +6,12 @@ using SharedKernel.Domain.Validation;
 
 namespace SharedKernel.Domain.Services
 {
-    public class CrudService<T> : QueryService<T>, ICrudService<T> where T : EntityBase, IAggregateRoot
+    public class CrudService<T> : QueryService<T> where T : EntityBase, IAggregateRoot
     {
-        public new IRepository<T> Repository { get; }
-
         protected Validator<T> Validator { get; set; }
 
-        public CrudService(IRepository<T> repository, Validator<T> validator) : base(repository)
+        public CrudService(IHelperRepository helperRepository, Validator<T> validator) : base(helperRepository)
         {
-            Repository = repository;
             Validator = validator;
         }
         
@@ -26,15 +23,24 @@ namespace SharedKernel.Domain.Services
             if (!result.IsValid)
                 throw new ValidatorException(result.Errors);
 
-            try
+            using (var session = HelperRepository.OpenSession())
             {
-                entity.DataInclusao = DateTime.Now;
-                entity.UsuarioInclusao = user;
-                Repository.Insert(entity);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                var repo = session.GetRepository<T>();
+                try
+                {
+                    session.StartTransaction();
+
+                    entity.DataInclusao = DateTime.Now;
+                    entity.UsuarioInclusao = user;
+                    repo.Insert(entity);
+
+                    session.CommitTransaction();
+                }
+                catch (Exception ex)
+                {
+                    session.RollBackTransaction();
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
@@ -44,20 +50,29 @@ namespace SharedKernel.Domain.Services
             if (!result.IsValid)
                 throw new ValidatorException(result.Errors);
 
-            try
+            using (var session = HelperRepository.OpenSession())
             {
-                foreach (var entity in entities)
+                var repo = session.GetRepository<T>();
+                try
                 {
-                    entity.AddInverseReferences(user);
+                    session.StartTransaction();
 
-                    entity.DataInclusao = DateTime.Now;
-                    entity.UsuarioInclusao = user;
-                    Repository.Insert(entity);
+                    foreach (var entity in entities)
+                    {
+                        entity.AddInverseReferences(user);
+
+                        entity.DataInclusao = DateTime.Now;
+                        entity.UsuarioInclusao = user;
+                        repo.Insert(entity);
+                    }
+
+                    session.CommitTransaction();
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                catch (Exception ex)
+                {
+                    session.RollBackTransaction();
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
@@ -69,15 +84,24 @@ namespace SharedKernel.Domain.Services
             if (!result.IsValid)
                 throw new ValidatorException(result.Errors);
 
-            try
+            using (var session = HelperRepository.OpenSession())
             {
-                entity.DataAlteracao = DateTime.Now;
-                entity.UsuarioAlteracao = user;
-                Repository.Update(entity);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                var repo = session.GetRepository<T>();
+                try
+                {
+                    session.StartTransaction();
+
+                    entity.DataAlteracao = DateTime.Now;
+                    entity.UsuarioAlteracao = user;
+                    repo.Update(entity);
+
+                    session.CommitTransaction();
+                }
+                catch (Exception ex)
+                {
+                    session.RollBackTransaction();
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
@@ -87,19 +111,28 @@ namespace SharedKernel.Domain.Services
             if (!result.IsValid)
                 throw new ValidatorException(result.Errors);
 
-            try
+            using (var session = HelperRepository.OpenSession())
             {
-                foreach (var entity in entities)
+                var repo = session.GetRepository<T>();
+                try
                 {
-                    entity.AddInverseReferences(user);
-                    entity.DataAlteracao = DateTime.Now;
-                    entity.UsuarioAlteracao = user;
-                    Repository.Update(entity);
+                    session.StartTransaction();
+
+                    foreach (var entity in entities)
+                    {
+                        entity.AddInverseReferences(user);
+                        entity.DataAlteracao = DateTime.Now;
+                        entity.UsuarioAlteracao = user;
+                        repo.Update(entity);
+                    }
+
+                    session.CommitTransaction();
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                catch (Exception ex)
+                {
+                    session.RollBackTransaction();
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
@@ -109,13 +142,22 @@ namespace SharedKernel.Domain.Services
             if (!result.IsValid)
                 throw new ValidatorException(result.Errors);
 
-            try
+            using (var session = HelperRepository.OpenSession())
             {
-                Repository.Delete(entity);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                var repo = session.GetRepository<T>();
+                try
+                {
+                    session.StartTransaction();
+
+                    repo.Delete(entity);
+
+                    session.CommitTransaction();
+                }
+                catch (Exception ex)
+                {
+                    session.RollBackTransaction();
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }
