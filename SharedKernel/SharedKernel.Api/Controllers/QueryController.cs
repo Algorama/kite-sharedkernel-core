@@ -11,11 +11,11 @@ namespace SharedKernel.Api.Controllers
     [UserAuthorization]
     public class QueryController<T> : Controller where T : EntityBase
     {
-        protected IQueryService<T> Service { get; set; }
+        protected QueryService<T> Service { get; set; }
 
         public QueryController()
         {
-            Service = Kernel.Get<IQueryService<T>>();
+            Service = Kernel.Get<QueryService<T>>();
         }
 
         /// <summary>

@@ -15,14 +15,14 @@ namespace SharedKernel.Api.Controllers
     [Route("api/[controller]")]
     public class TokenController : Controller
     {
-        private readonly IUsuarioService _usuarioService;
+        private readonly UsuarioService _usuarioService;
 
         /// <summary>
         /// Recurso para Autenticar Usuários da Aplicação
         /// </summary>
         public TokenController()
 	    {
-	        _usuarioService = Kernel.Get<IUsuarioService>();
+	        _usuarioService = Kernel.Get<UsuarioService>();
         }
 
         /// <summary>

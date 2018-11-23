@@ -12,11 +12,11 @@ namespace SharedKernel.Api.Controllers
     [UserAuthorization]
     public class CrudController<T> : QueryController<T> where T : EntityBase, IAggregateRoot
     {
-        protected new ICrudService<T> Service { get; set; }
+        protected new CrudService<T> Service { get; set; }
 
         public CrudController()
         {
-            Service = Kernel.Get<ICrudService<T>>();
+            Service = Kernel.Get<CrudService<T>>();
         }
 
         /// <summary>
