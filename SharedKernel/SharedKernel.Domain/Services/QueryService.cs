@@ -24,7 +24,7 @@ namespace SharedKernel.Domain.Services
             using (var session = HelperRepository.OpenSession())
             {
                 var repo = session.GetQueryRepository<T>();
-                var entity = repo.Get(1);
+                var entity = repo.Get(id);
                 return entity;
             }
         }

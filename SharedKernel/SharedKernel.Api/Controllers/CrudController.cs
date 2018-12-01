@@ -88,11 +88,7 @@ namespace SharedKernel.Api.Controllers
         {
             try
             {
-                var entity = Service.Get(id);
-                if (entity == null)
-                    return NotFound();
-
-                Service.Delete(entity);
+                Service.Delete(id);
 
                 return Ok();
             }

@@ -136,18 +136,19 @@ namespace SharedKernel.Domain.Services
             }
         }
 
-        public virtual void Delete(T entity)
+        public virtual void Delete(long id)
         {
-            var result = Validator.Validate(entity, ValidationTypes.Delete);
-            if (!result.IsValid)
-                throw new ValidatorException(result.Errors);
-
             using (var session = HelperRepository.OpenSession())
             {
                 var repo = session.GetRepository<T>();
                 try
                 {
                     session.StartTransaction();
+
+                    var entity = repo.Get(id);
+                    var result = Validator.Validate(entity, ValidationTypes.Delete);
+                    if (!result.IsValid)
+                        throw new ValidatorException(result.Errors);
 
                     repo.Delete(entity);
 
