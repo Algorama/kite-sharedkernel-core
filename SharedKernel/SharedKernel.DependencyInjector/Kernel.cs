@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SharedKernel.Domain.Repositories;
 using SharedKernel.Domain.Repositories.Mock;
 using SimpleInjector;
+using SimpleInjector.Advanced;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
 
@@ -28,18 +29,24 @@ namespace SharedKernel.DependencyInjector
         public static void StartMockRepository()
         {
             if (_kernel == null) _kernel = new Container();
+            if(_kernel.IsLocked()) return;
+
             _kernel.Register<IHelperRepository, MockHelperRepository>();
         }
 
         public static void StartNHibernate()
         {
             if(_kernel == null) _kernel = new Container();
+            if (_kernel.IsLocked()) return;
+
             _kernel.Register<IHelperRepository, NHibernate.Repositories.HelperRepository>();
         }
 
         public static void StartEntityFramework()
         {
             if (_kernel == null) _kernel = new Container();
+            if (_kernel.IsLocked()) return;
+
             _kernel.Register<IHelperRepository, EntityFramework.Repositories.HelperRepository>();
         }
 
@@ -73,6 +80,8 @@ namespace SharedKernel.DependencyInjector
             if(_kernel == null)
                 throw new Exception("Kernel não foi inicializado");
 
+            if (_kernel.IsLocked()) return;
+
             _kernel.Register<TFrom, TTo>();
         }
 
@@ -80,6 +89,8 @@ namespace SharedKernel.DependencyInjector
         {
             if (_kernel == null)
                 throw new Exception("Kernel não foi inicializado");
+
+            if (_kernel.IsLocked()) return;
 
             _kernel.Register(type1, type2);
         }
