@@ -10,7 +10,6 @@
   <ItemGroup>
     <PackageReference Include="JWT" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.0.0-beta2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.1.0" />
   </ItemGroup>
 

@@ -1,6 +1,5 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNet.OData;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Services;
 using SharedKernel.Api.Filters;
@@ -62,14 +61,6 @@ namespace SharedKernel.Api.Controllers
                 Console.WriteLine(ex);
                 throw;
             }
-        }
-
-        [HttpGet]
-        [Route("odata")]
-        [EnableQuery]
-        public IActionResult GetOdata()
-        {
-            return Ok(Service.GetAll());
         }
     }
 }
