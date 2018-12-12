@@ -8,7 +8,7 @@ using SharedKernel.DependencyInjector;
 namespace SharedKernel.Api.Controllers
 {
     [UserAuthorization]
-    public class QueryController<T> : Controller where T : EntityBase
+    public class QueryController<T> : ControllerBase where T : EntityBase
     {
         protected QueryService<T> Service { get; set; }
 
@@ -22,9 +22,8 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="id">ID da entidade</param>
         /// <returns>Entidade</returns>
-        [HttpGet]
-        [Route("{id}")]
-        public virtual IActionResult Get(long id)
+        [HttpGet("{id}")]
+        public virtual IActionResult GetById(long id)
         {
             try
             {

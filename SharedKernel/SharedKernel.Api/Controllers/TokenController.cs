@@ -13,7 +13,8 @@ namespace SharedKernel.Api.Controllers
     /// Recurso para Autenticar Usuários da Aplicação
     /// </summary>
     [Route("api/[controller]")]
-    public class TokenController : Controller
+    [ApiController]
+    public class TokenController : ControllerBase
     {
         private readonly UsuarioService _usuarioService;
 

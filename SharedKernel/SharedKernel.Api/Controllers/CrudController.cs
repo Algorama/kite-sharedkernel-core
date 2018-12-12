@@ -83,7 +83,7 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="id">ID da Entidade</param>
         /// <returns>OK</returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public virtual IActionResult Delete(long id)
         {
             try
