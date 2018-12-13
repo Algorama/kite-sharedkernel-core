@@ -15,7 +15,7 @@ namespace SharedKernel.Domain.Services
             Validator = validator;
         }
         
-        public virtual void Insert(T entity, string user = "sistema")
+        public virtual void Insert(T entity, string user = "system")
         {
             entity.AddInverseReferences(user);
 
@@ -76,7 +76,7 @@ namespace SharedKernel.Domain.Services
             }
         }
 
-        public virtual void Update(T entity, string user = "sistema")
+        public virtual void Update(T entity, string user = "system")
         {
             entity.AddInverseReferences(user);
 

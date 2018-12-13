@@ -3,8 +3,8 @@ using SharedKernel.Domain.Services;
 
 namespace SharedKernel.Domain.Validation
 {
-    public class UsuarioValidator : Validator<Usuario>
+    public class UserValidator : Validator<User>
     {
-        public UsuarioService Service { get; set; }
+        public UserService Service { get; set; }
     }
 }

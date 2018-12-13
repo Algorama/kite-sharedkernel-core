@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Maps\Usuario.hbm.xml" />
+    <None Remove="Maps\User.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Maps\Usuario.hbm.xml" />
+    <EmbeddedResource Include="Maps\User.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>

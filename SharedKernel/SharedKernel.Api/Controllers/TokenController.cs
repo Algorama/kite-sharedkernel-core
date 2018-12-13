@@ -16,14 +16,14 @@ namespace SharedKernel.Api.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
-        private readonly UsuarioService _usuarioService;
+        private readonly UserService _usuarioService;
 
         /// <summary>
         /// Recurso para Autenticar Usuários da Aplicação
         /// </summary>
         public TokenController()
 	    {
-	        _usuarioService = Kernel.Get<UsuarioService>();
+	        _usuarioService = Kernel.Get<UserService>();
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace SharedKernel.Api.Controllers
         {
             try
             {
-                _usuarioService.TrocaSenha(changePasswordRequest);
+                _usuarioService.ChangePassword(changePasswordRequest);
 
                 var login = new LoginRequest
                 {
