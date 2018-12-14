@@ -4,10 +4,9 @@ namespace SharedKernel.Domain.Dtos
 {
     public class Token
     {
-        public long     UsuarioId       { get; set; }
-        public string   UsuarioNome     { get; set; }
-        public string   Login           { get; set; }
-        public DateTime DataExpiracao   { get; set; }
-        public bool     DeveTrocarSenha { get; set; }
+        public long     UserId       { get; set; }
+        public string   UserName     { get; set; }
+        public string   Login        { get; set; }
+        public DateTime ExpirateAt   { get; set; }
     }
 }

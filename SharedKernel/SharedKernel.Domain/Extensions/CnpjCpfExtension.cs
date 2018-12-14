@@ -15,7 +15,6 @@ namespace SharedKernel.Domain.Extensions
             var v = new int[2];
             int j, i, soma;
 
-            //validação de CPF
             switch (cnpjCpf.Length)
             {
                 case 11:

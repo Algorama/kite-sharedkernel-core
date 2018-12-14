@@ -26,7 +26,7 @@ namespace SharedKernel.Api.Filters
                 actionContext.Result = new StatusCodeResult(500);
             }
 
-            if (token == null || DateTime.Now > token.DataExpiracao)
+            if (token == null || DateTime.Now > token.ExpirateAt)
                 actionContext.Result = new UnauthorizedResult();
 
             base.OnActionExecuting(actionContext);

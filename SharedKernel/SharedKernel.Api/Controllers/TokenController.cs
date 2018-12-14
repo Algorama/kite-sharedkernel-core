@@ -38,7 +38,6 @@ namespace SharedKernel.Api.Controllers
             {
                 var usuario = _usuarioService.Login(login);
                 if (usuario == null) return Unauthorized();
-                if (usuario.DeveTrocarSenha) return BadRequest("Troca de Senha Obrigatória!");
 
                 var token = usuario.GerarTokenString();
                 return Ok(new { Token = token });
@@ -59,8 +58,7 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="changePasswordRequest">Informações para a troca de senha obrigatória</param>
         /// <returns>Ok</returns>
-        [HttpPost]
-        [Route("TrocaSenha")]
+        [HttpPost("TrocaSenha")]
         public ActionResult PostTrocaSenha([FromBody]ChangePasswordRequest changePasswordRequest)
         {
             try

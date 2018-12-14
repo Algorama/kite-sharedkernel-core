@@ -52,7 +52,7 @@ namespace SharedKernel.Domain.Services
         public virtual PageResult<T> GetPaged(int page, PageSize size)
         {
             if (page < 1)
-                throw new ValidationException("Número da Página começa em 1");
+                throw new ValidationException("Invalid Page Number! First Page Number is 1.");
 
             var result = new PageResult<T> { Page = page };
 

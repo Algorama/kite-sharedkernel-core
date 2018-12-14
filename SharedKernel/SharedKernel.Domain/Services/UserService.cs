@@ -59,10 +59,10 @@ namespace SharedKernel.Domain.Services
 
             var token = new Token
             {
-                UsuarioId = user.Id,
-                UsuarioNome = user.Name,
+                UserId = user.Id,
+                UserName = user.Name,
                 Login = user.Login,
-                DataExpiracao = DateTime.Now.AddHours(12)
+                ExpirateAt = DateTime.Now.AddHours(12)
             };
 
             return token;
@@ -76,7 +76,7 @@ namespace SharedKernel.Domain.Services
                 x.Password == oldPassword).FirstOrDefault();
 
             if (user == null)
-                throw new ValidationException("Old Password do not match");
+                throw new ValidationException("Old Password is invalid!");
 
             user.Password = CryptoTools.ComputeHashMd5(changePasswordRequest.NewPassword);
 

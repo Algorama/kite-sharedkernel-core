@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore; 
-using SharedKernel.Domain.Dtos;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Repositories;
 
@@ -68,33 +67,6 @@ namespace SharedKernel.EntityFramework.Repositories
 
                 return result;
             }
-        }
-
-        public ODataResult<T> GetOData(List<KeyValuePair<string, string>> queryStringParts)
-        {
-            throw new NotImplementedException();
-
-            // //Separo e removo o $inlinecount pq o ODataQuery não implementa 
-            // var inlinecount = queryStringParts.FirstOrDefault(x => x.Key == "$inlinecount");
-            // queryStringParts.Remove(inlinecount);
-
-            // //Realiza a consulta
-            // var dados = Session.ODataQuery<T>(queryStringParts, new ODataParserConfiguration { CaseSensitiveLike = false }).List<T>();
-
-            // //Verifica se vai ter Count
-            // var count = inlinecount.Value == "allpages";
-
-            // if (!count) return new ODataResult<T>(dados);
-
-            // //Adiciona o clausula $count e executa a query
-            // queryStringParts.Add(new KeyValuePair<string, string>("$count", "true"));
-
-            // //remove a clausula orderby para realizar o count
-            // var orderby = queryStringParts.FirstOrDefault(x => x.Key == "$orderby");
-            // queryStringParts.Remove(orderby);
-            // var result = Session.ODataQuery<T>(queryStringParts, new ODataParserConfiguration { CaseSensitiveLike = false }).List();
-
-            // return new ODataResult<T>(result.Count > 0 ? (int)result[0] : 0, dados);
         }
 
         private static IEnumerable<string> GetInclude(Type type)
