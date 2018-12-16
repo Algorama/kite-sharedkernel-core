@@ -15,7 +15,7 @@ namespace SharedKernel.Domain.Repositories.Mock
 
         public T Get(long id)
         {
-            return Data.FirstOrDefault(x => x.Id == id);
+            return (T)Data.FirstOrDefault(x => x.Id == id)?.Clone();
         }
 
         public IQueryable<T> Query => Data.AsQueryable();
