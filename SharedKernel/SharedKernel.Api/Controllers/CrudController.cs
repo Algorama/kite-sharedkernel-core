@@ -32,14 +32,11 @@ namespace SharedKernel.Api.Controllers
                 var token = HttpContext.RecuperarToken();
 
                 Service.Insert(entity, token?.Login ?? "");
-                
-                // TODO: Recuperar UrlHelper
-                // var helper = new UrlHelper(Request);
-                // var location = helper.Link("DefaultApi", new { id = entity.Id });
 
-                // return Created(location, entity);
-
-                return Ok(entity);
+                return CreatedAtAction(
+                    "GetById",
+                    new { id = entity.Id },
+                    entity);
             }
             catch (ValidatorException ex)
             {
@@ -47,8 +44,7 @@ namespace SharedKernel.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                throw;
+                return StatusCode(500, ex);
             }
         }
 
@@ -73,8 +69,7 @@ namespace SharedKernel.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                throw;
+                return StatusCode(500, ex);
             }
         }
 
@@ -98,8 +93,7 @@ namespace SharedKernel.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                throw;
+                return StatusCode(500, ex);
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using SharedKernel.Domain.Dtos;
 using SharedKernel.Domain.Entities;
@@ -76,7 +75,7 @@ namespace SharedKernel.Domain.Services
                 x.Password == oldPassword).FirstOrDefault();
 
             if (user == null)
-                throw new ValidationException("Old Password is invalid!");
+                throw new ValidatorException("Old Password is invalid!");
 
             user.Password = CryptoTools.ComputeHashMd5(changePasswordRequest.NewPassword);
 

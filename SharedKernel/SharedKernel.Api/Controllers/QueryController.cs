@@ -38,8 +38,7 @@ namespace SharedKernel.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                throw;
+                return StatusCode(500, ex);
             }
         }
 
@@ -57,8 +56,7 @@ namespace SharedKernel.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                throw;
+                return StatusCode(500, ex);
             }
         }
     }
