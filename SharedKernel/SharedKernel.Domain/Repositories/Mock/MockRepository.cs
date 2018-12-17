@@ -19,7 +19,8 @@ namespace SharedKernel.Domain.Repositories.Mock
         
         public void Delete(T entity)
         {
-            Data.Remove(entity);
+            var entityToDelete = Data.FirstOrDefault(x => x.Id == entity.Id);
+            Data.Remove(entityToDelete);
         }
 
         private static long GenerateId()
