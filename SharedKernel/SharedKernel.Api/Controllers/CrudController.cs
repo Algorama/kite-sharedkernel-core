@@ -40,7 +40,7 @@ namespace SharedKernel.Api.Controllers
             }
             catch (ValidatorException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Errors);
             }
             catch (Exception ex)
             {
@@ -65,7 +65,7 @@ namespace SharedKernel.Api.Controllers
             }
             catch (ValidatorException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Errors);
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace SharedKernel.Api.Controllers
             }
             catch (ValidatorException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Errors);
             }
             catch (Exception ex)
             {
