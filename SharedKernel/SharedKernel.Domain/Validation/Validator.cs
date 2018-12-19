@@ -55,7 +55,7 @@ namespace SharedKernel.Domain.Validation
             AnnotationsValidations(result, entity);
 
             if (entity == null)
-                result.AddError("Entity não pode ser nula!");
+                result.AddError("Entity can not be null!");
         }
 
         protected virtual void InsertValidations(ValidatorResult result, T entity)

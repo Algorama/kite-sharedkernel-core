@@ -1,11 +1,11 @@
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Services;
 using SharedKernel.Domain.Validation;
 using SharedKernel.Api.Security;
 using SharedKernel.Api.Filters;
-using SharedKernel.DependencyInjector;
 
 namespace SharedKernel.Api.Controllers
 {
@@ -14,9 +14,9 @@ namespace SharedKernel.Api.Controllers
     {
         protected new CrudService<T> Service { get; set; }
 
-        public CrudController()
+        public CrudController(CrudService<T> service) : base(service)
         {
-            Service = Kernel.Get<CrudService<T>>();
+            Service = service;
         }
 
         /// <summary>
@@ -53,11 +53,17 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="entity">Entidade</param>
         /// <returns>Entidade atualizada</returns>
-        [HttpPut]
-        public virtual IActionResult Put([FromBody]T entity)
+        [HttpPut("{id}")]
+        public virtual IActionResult Put([FromBody]T entity, long id)
         {
             try
             {
+                var fromDb = Service.Get(id);
+                if (fromDb == null)
+                    return NotFound(id);
+
+                entity.Id = id;
+
                 var token = HttpContext.RecuperarToken();
                 Service.Update(entity, token?.Login);
 
@@ -65,6 +71,9 @@ namespace SharedKernel.Api.Controllers
             }
             catch (ValidatorException ex)
             {
+                if (ex.Errors.FirstOrDefault()?.ErrorMessage == "Entity can not be null!")
+                    return NotFound(entity.Id);
+
                 return BadRequest(ex.Errors);
             }
             catch (Exception ex)

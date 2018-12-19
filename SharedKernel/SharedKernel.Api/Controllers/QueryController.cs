@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Services;
 using SharedKernel.Api.Filters;
-using SharedKernel.DependencyInjector;
 
 namespace SharedKernel.Api.Controllers
 {
@@ -12,9 +11,9 @@ namespace SharedKernel.Api.Controllers
     {
         protected QueryService<T> Service { get; set; }
 
-        public QueryController()
+        public QueryController(QueryService<T> service)
         {
-            Service = Kernel.Get<QueryService<T>>();
+            Service = service;
         }
 
         /// <summary>

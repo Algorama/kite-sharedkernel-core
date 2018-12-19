@@ -4,7 +4,6 @@ using SharedKernel.Domain.Dtos;
 using SharedKernel.Domain.Services;
 using SharedKernel.Domain.Validation;
 using SharedKernel.Api.Security;
-using SharedKernel.DependencyInjector;
 
 namespace SharedKernel.Api.Controllers
 {
@@ -21,9 +20,9 @@ namespace SharedKernel.Api.Controllers
         /// <summary>
         /// Recurso para Autenticar Usuários da Aplicação
         /// </summary>
-        public TokenController()
-	    {
-	        _usuarioService = Kernel.Get<UserService>();
+        public TokenController(UserService usuarioService)
+        {
+            _usuarioService = usuarioService;
         }
 
         /// <summary>
@@ -37,19 +36,19 @@ namespace SharedKernel.Api.Controllers
             try
             {
                 var usuario = _usuarioService.Login(login);
-                if (usuario == null) return Unauthorized();
+                if (usuario == null)
+                    return Unauthorized();
 
                 var token = usuario.GerarTokenString();
                 return Ok(new { Token = token });
             }
             catch (ValidatorException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Errors);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                throw;
+                return StatusCode(500, ex);
             }
         }
 
@@ -58,7 +57,7 @@ namespace SharedKernel.Api.Controllers
         /// </summary>
         /// <param name="changePasswordRequest">Informações para a troca de senha obrigatória</param>
         /// <returns>Ok</returns>
-        [HttpPost("TrocaSenha")]
+        [HttpPatch("TrocaSenha")]
         public ActionResult PostTrocaSenha([FromBody]ChangePasswordRequest changePasswordRequest)
         {
             try
@@ -72,19 +71,19 @@ namespace SharedKernel.Api.Controllers
                 };
 
                 var usuario = _usuarioService.Login(login);
-                if (usuario == null) return Unauthorized();
+                if (usuario == null)
+                    return Unauthorized();
 
                 var token = usuario.GerarTokenString();
                 return Ok(new { Token = token });
             }
             catch (ValidatorException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Errors);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                throw;
+                return StatusCode(500, ex);
             }
         }
     }

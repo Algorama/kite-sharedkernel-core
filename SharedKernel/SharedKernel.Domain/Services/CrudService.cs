@@ -36,10 +36,10 @@ namespace SharedKernel.Domain.Services
 
                     session.CommitTransaction();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     session.RollBackTransaction();
-                    Console.WriteLine(ex.Message);
+                    throw;
                 }
             }
         }
@@ -68,10 +68,10 @@ namespace SharedKernel.Domain.Services
 
                     session.CommitTransaction();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     session.RollBackTransaction();
-                    Console.WriteLine(ex.Message);
+                    throw;
                 }
             }
         }
@@ -97,10 +97,10 @@ namespace SharedKernel.Domain.Services
 
                     session.CommitTransaction();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     session.RollBackTransaction();
-                    Console.WriteLine(ex.Message);
+                    throw;
                 }
             }
         }
@@ -128,10 +128,10 @@ namespace SharedKernel.Domain.Services
 
                     session.CommitTransaction();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     session.RollBackTransaction();
-                    Console.WriteLine(ex.Message);
+                    throw;
                 }
             }
         }
@@ -154,10 +154,10 @@ namespace SharedKernel.Domain.Services
 
                     session.CommitTransaction();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     session.RollBackTransaction();
-                    Console.WriteLine(ex.Message);
+                    throw;
                 }
             }
         }

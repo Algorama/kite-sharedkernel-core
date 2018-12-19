@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using SharedKernel.DependencyInjector;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Services;
 
@@ -15,9 +14,8 @@ namespace SharedKernel.Api.Controllers
     {
         public new UserService Service { get; set; }
 
-        public UserController()
+        public UserController(UserService service) : base(service)
         {
-            Service = Kernel.Get<UserService>();
         }
     }
 }
