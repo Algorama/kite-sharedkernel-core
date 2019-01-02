@@ -14,7 +14,7 @@ namespace SharedKernel.NHibernate.Repositories
         {
             if (_sessionFactory != null) return _sessionFactory;
 
-            var config = new Configuration().Configure(GetPath() + "\\nhibernate.cfg.xml");
+            var config = new Configuration().Configure(GetPath() + "nhibernate.cfg.xml");
             _sessionFactory = config.BuildSessionFactory();
             return _sessionFactory;
         }
@@ -22,7 +22,7 @@ namespace SharedKernel.NHibernate.Repositories
         public static string GetPath()
         {
             var x = new Uri(Assembly.GetExecutingAssembly().CodeBase);
-            var path = x.LocalPath.ToLower().Replace("\\sharedkernel.nhibernate.dll", "");
+            var path = x.LocalPath.ToLower().Replace("sharedkernel.nhibernate.dll", "");
             return path;
         }
 
@@ -33,7 +33,7 @@ namespace SharedKernel.NHibernate.Repositories
 
         public static void CreateSchema()
         {
-            var caminhoArquivo = GetPath() + "\\nhibernate.cfg.xml";
+            var caminhoArquivo = GetPath() + "nhibernate.cfg.xml";
             var config = new Configuration().Configure(caminhoArquivo);
 
             var schemaExport = new SchemaExport(config);
