@@ -29,6 +29,7 @@
 
     <!-- Registrando os Assemblies que contém os mapeamentos -->
     <mapping assembly="SharedKernel.Test"/>
+    <mapping assembly="SharedKernel.Domain"/>
 
   </session-factory>
 </hibernate-configuration>
