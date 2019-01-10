@@ -46,12 +46,11 @@ namespace SharedKernel.Domain.Services
         }
 
         public Token Login(LoginRequest loginRequest)
-        {
-            var password = CryptoTools.ComputeHashMd5(loginRequest.Password);
+        {            
             var user = GetAll(x => x.Login.ToUpper() == loginRequest.Login.ToUpper()).FirstOrDefault();
-
             if (user == null) return null;
 
+            var password = CryptoTools.ComputeHashMd5(loginRequest.Password);
             if (user.Password != password) return null;
 
             var token = new Token
