@@ -54,8 +54,6 @@ namespace SharedKernel.Domain.Services
 
             if (user.Password != password) return null;
 
-            Update(user);
-
             var token = new Token
             {
                 UserId = user.Id,
