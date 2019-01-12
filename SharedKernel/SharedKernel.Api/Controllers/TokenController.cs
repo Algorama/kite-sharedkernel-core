@@ -4,6 +4,7 @@ using SharedKernel.Domain.Dtos;
 using SharedKernel.Domain.Services;
 using SharedKernel.Domain.Validation;
 using SharedKernel.Api.Security;
+using SharedKernel.DependencyInjector;
 
 namespace SharedKernel.Api.Controllers
 {
@@ -20,9 +21,9 @@ namespace SharedKernel.Api.Controllers
         /// <summary>
         /// Recurso para Autenticar Usuários da Aplicação
         /// </summary>
-        public TokenController(UserService usuarioService)
+        public TokenController()
         {
-            _usuarioService = usuarioService;
+            _usuarioService = Kernel.Get<UserService>();
         }
 
         /// <summary>

@@ -8,5 +8,7 @@ namespace SharedKernel.Domain.Dtos
         public string   UserName     { get; set; }
         public string   Login        { get; set; }
         public DateTime ExpirateAt   { get; set; }
+
+        public override string ToString() => $"[{UserId}] - {Login} - {ExpirateAt}";
     }
 }

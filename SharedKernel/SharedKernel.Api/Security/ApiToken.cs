@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using JWT;
 using SharedKernel.Domain.Dtos;
@@ -23,7 +21,7 @@ namespace SharedKernel.Api.Security
         public static string GerarTokenString(this Token token)
         {
             if (string.IsNullOrWhiteSpace(Secret))
-                throw new Exception("A chave de criptografia está ausente!");
+                throw new Exception("The Secrect Key was not generated!");
 
             var algorithm = new HMACSHA256Algorithm();
             var serializer = new JsonNetSerializer();
@@ -58,7 +56,7 @@ namespace SharedKernel.Api.Security
             }
             catch (SignatureVerificationException)
             {
-                Console.Out.WriteLine("Token Inválido!");
+                Console.Out.WriteLine("Invalid Token!");
             }
             return null;
         }
