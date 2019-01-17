@@ -52,6 +52,7 @@ namespace SharedKernel.Api.Controllers
         /// Atualiza dados da entidade (UPDATE)
         /// </summary>
         /// <param name="entity">Entidade</param>
+        /// <param name="id"></param>
         /// <returns>Entidade atualizada</returns>
         [HttpPut("{id}")]
         public virtual IActionResult Put([FromBody]T entity, long id)
