@@ -2,6 +2,7 @@
 {
     public enum PageSize
     {
+        Page10 = 10,
         Page20 = 20,
         Page50 = 50,
         Page100 = 100,

@@ -63,6 +63,9 @@ namespace SharedKernel.Api.Controllers
         {
             try
             {
+                var token = HttpContext.RecuperarToken();
+                changePasswordRequest.Login = token.Login;
+
                 _usuarioService.ChangePassword(changePasswordRequest);
 
                 var login = new LoginRequest
@@ -75,8 +78,8 @@ namespace SharedKernel.Api.Controllers
                 if (usuario == null)
                     return Unauthorized();
 
-                var token = usuario.GerarTokenString();
-                return Ok(new { Token = token });
+                var tokenString = usuario.GerarTokenString();
+                return Ok(new { Token = tokenString });
             }
             catch (ValidatorException ex)
             {

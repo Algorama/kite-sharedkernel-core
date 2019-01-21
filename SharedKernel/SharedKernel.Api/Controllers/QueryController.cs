@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Services;
 using SharedKernel.Api.Filters;
+using SharedKernel.Domain.ValueObjects;
 
 namespace SharedKernel.Api.Controllers
 {
@@ -51,6 +52,24 @@ namespace SharedKernel.Api.Controllers
             try
             {
                 var result = Service.GetAll();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
+        /// <summary>
+        /// Retorna todas as entidades
+        /// </summary>
+        /// <returns>Lista Paginada de Entidades</returns>
+        [HttpGet("Page/{page}")]
+        public virtual IActionResult GetPage(int page)
+        {
+            try
+            {
+                var result = Service.GetPaged(page, PageSize.Page10);
                 return Ok(result);
             }
             catch (Exception ex)
