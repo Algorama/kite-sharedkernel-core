@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SharedKernel.Domain.Dtos;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Repositories;
@@ -45,6 +46,16 @@ namespace SharedKernel.Domain.Services
             {
                 var repo = session.GetQueryRepository<T>();
                 var entities = repo.Query.Where(@where).ToList();
+                return entities;
+            }
+        }
+
+        public virtual async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> @where)
+        {
+            using (var session = HelperRepository.OpenSession())
+            {
+                var repo = session.GetQueryRepository<T>();
+                var entities = await repo.GetAllAsync(@where);
                 return entities;
             }
         }

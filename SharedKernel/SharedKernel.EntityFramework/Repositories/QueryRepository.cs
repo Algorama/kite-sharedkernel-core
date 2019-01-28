@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore; 
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Repositories;
@@ -67,6 +68,16 @@ namespace SharedKernel.EntityFramework.Repositories
 
                 return result;
             }
+        }
+
+        public Task<T> GetAsync(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> @where)
+        {
+            throw new NotImplementedException();
         }
 
         private static IEnumerable<string> GetInclude(Type type)

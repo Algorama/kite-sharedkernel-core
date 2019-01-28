@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using SharedKernel.Domain.Dtos;
 using SharedKernel.Domain.Entities;
 using SharedKernel.Domain.Helpers;
@@ -48,6 +49,28 @@ namespace SharedKernel.Domain.Services
         public Token Login(LoginRequest loginRequest)
         {            
             var user = GetAll(x => x.Login.ToUpper() == loginRequest.Login.ToUpper()).FirstOrDefault();
+            if (user == null) return null;
+
+            var password = CryptoTools.ComputeHashMd5(loginRequest.Password);
+            if (user.Password != password) return null;
+
+            var token = new Token
+            {
+                UserId = user.Id,
+                UserName = user.Name,
+                Login = user.Login,
+                ExpirateAt = DateTime.Now.AddHours(12)
+            };
+
+            return token;
+        }
+
+        public async Task<Token> LoginAsync(LoginRequest loginRequest)
+        {
+            var result = await GetAllAsync(x => x.Login.ToUpper() == loginRequest.Login.ToUpper());
+
+            var user = result.FirstOrDefault();
+
             if (user == null) return null;
 
             var password = CryptoTools.ComputeHashMd5(loginRequest.Password);
