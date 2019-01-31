@@ -13,6 +13,7 @@ namespace SharedKernel.Domain.Repositories
         IQueryable<T> Query { get; }
 
         Task<T> GetAsync(long id);
+        Task<IList<T>> GetAllAsync();
         Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> @where);
     }
 }

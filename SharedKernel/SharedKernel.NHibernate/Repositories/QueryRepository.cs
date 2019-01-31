@@ -31,6 +31,11 @@ namespace SharedKernel.NHibernate.Repositories
 
         public IQueryable<T> Query => Session.Query<T>();
 
+        public async Task<IList<T>> GetAllAsync()
+        {
+            return await Session.Query<T>().ToListAsync();
+        }
+
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> @where)
         {
             return await Session.Query<T>().Where(@where).ToListAsync();

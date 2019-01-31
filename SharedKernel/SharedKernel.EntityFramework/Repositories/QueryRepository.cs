@@ -75,6 +75,11 @@ namespace SharedKernel.EntityFramework.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<IList<T>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> @where)
         {
             throw new NotImplementedException();

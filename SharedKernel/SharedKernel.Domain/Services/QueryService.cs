@@ -50,6 +50,16 @@ namespace SharedKernel.Domain.Services
             }
         }
 
+        public virtual async Task<IList<T>> GetAllAsync()
+        {
+            using (var session = HelperRepository.OpenSession())
+            {
+                var repo = session.GetQueryRepository<T>();
+                var entities = await repo.GetAllAsync();
+                return entities;
+            }
+        }
+
         public virtual async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> @where)
         {
             using (var session = HelperRepository.OpenSession())
