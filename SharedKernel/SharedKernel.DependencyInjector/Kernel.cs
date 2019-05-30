@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -58,6 +59,8 @@ namespace SharedKernel.DependencyInjector
             services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(_kernel));
             services.AddSingleton<IViewComponentActivator>(new SimpleInjectorViewComponentActivator(_kernel));
             services.UseSimpleInjectorAspNetRequestScoping(_kernel);
+
+            services.AddSingleton<HttpClient>();
         }
 
         public static void StartAspNet(IConfiguration configuration, IApplicationBuilder app)

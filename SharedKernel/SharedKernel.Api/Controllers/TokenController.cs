@@ -5,6 +5,7 @@ using SharedKernel.Domain.Services;
 using SharedKernel.Domain.Validation;
 using SharedKernel.Api.Security;
 using SharedKernel.DependencyInjector;
+using SharedKernel.Api.Filters;
 
 namespace SharedKernel.Api.Controllers
 {
@@ -80,6 +81,28 @@ namespace SharedKernel.Api.Controllers
 
                 var tokenString = usuario.GerarTokenString();
                 return Ok(new { Token = tokenString });
+            }
+            catch (ValidatorException ex)
+            {
+                return BadRequest(ex.Errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Valida")]
+        [UserAuthorization]
+        public ActionResult GetValida()
+        {
+            try
+            {
+                return Ok();
             }
             catch (ValidatorException ex)
             {

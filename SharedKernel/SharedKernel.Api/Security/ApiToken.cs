@@ -60,5 +60,26 @@ namespace SharedKernel.Api.Security
             }
             return null;
         }
+
+        public static Token RecuperarToken(string tokenString)
+        {
+            try
+            {
+                var serializer = new JsonNetSerializer();
+                var provider = new UtcDateTimeProvider();
+                var validator = new JwtValidator(serializer, provider);
+                var urlEncoder = new JwtBase64UrlEncoder();
+                var decoder = new JwtDecoder(serializer, validator, urlEncoder);
+
+                var json = decoder.Decode(tokenString, Secret, verify: true);
+
+                return JsonConvert.DeserializeObject<Token>(json);
+            }
+            catch (SignatureVerificationException)
+            {
+                Console.Out.WriteLine("Invalid Token!");
+            }
+            return null;
+        }
     }
 }
