@@ -1,21 +1,21 @@
-using Microsoft.AspNetCore.Mvc;
-using SharedKernel.Domain.Entities;
-using SharedKernel.Domain.Services;
+//using Microsoft.AspNetCore.Mvc;
+//using SharedKernel.Domain.Entities;
+//using SharedKernel.Domain.Services;
 
-namespace SharedKernel.Api.Controllers
-{
-    /// <inheritdoc />
-    /// <summary>
-    /// Recurso para Autenticar Usuários da Aplicação
-    /// </summary>
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : CrudController<User>
-    {
-        public new UserService Service { get; set; }
+//namespace SharedKernel.Api.Controllers
+//{
+//    /// <inheritdoc />
+//    /// <summary>
+//    /// Recurso para Autenticar Usuários da Aplicação
+//    /// </summary>
+//    [Route("api/[controller]")]
+//    [ApiController]
+//    public class UserController : CrudController<User>
+//    {
+//        public new UserService Service { get; set; }
 
-        public UserController(UserService service) : base(service)
-        {
-        }
-    }
-}
+//        public UserController(UserService service) : base(service)
+//        {
+//        }
+//    }
+//}

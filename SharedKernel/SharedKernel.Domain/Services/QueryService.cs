@@ -30,6 +30,16 @@ namespace SharedKernel.Domain.Services
             }
         }
 
+        public virtual async Task<T> GetAsync(long id)
+        {
+            using (var session = HelperRepository.OpenSession())
+            {
+                var repo = session.GetQueryRepository<T>();
+                var entity = await repo.GetAsync(id);
+                return entity;
+            }
+        }
+
         public virtual IList<T> GetAll()
         {
             using (var session = HelperRepository.OpenSession())

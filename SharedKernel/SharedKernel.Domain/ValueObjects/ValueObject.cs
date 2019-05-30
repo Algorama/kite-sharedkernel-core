@@ -76,7 +76,7 @@ namespace SharedKernel.Domain.ValueObjects
 
         public static bool operator ==(ValueObject<T> x, ValueObject<T> y)
         {
-            return x.Equals(y);
+            return x != null && x.Equals(y);
         }
 
         public static bool operator !=(ValueObject<T> x, ValueObject<T> y)

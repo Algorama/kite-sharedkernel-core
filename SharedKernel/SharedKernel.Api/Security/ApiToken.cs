@@ -14,8 +14,13 @@ namespace SharedKernel.Api.Security
 
         public static void GerarSecret()
         {
-            var secret = Guid.NewGuid().ToString("N").Substring(0, 20);
-            Secret = secret;
+            //var secret = Guid.NewGuid().ToString("N").Substring(0, 20);
+            //Secret = secret;
+
+            //TODO: Secrect está fixo aqui, mas devemos colocar num arquivo de configuração ou Vault 
+            //TODO: - Não devemos gerar como antes, senão não poderemos subir a api em varios servidores
+
+            Secret = "1c57ca00ddb84675ac87";
         }
 
         public static string GerarTokenString(this Token token)
